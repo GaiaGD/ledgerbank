@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Prompt', sans-serif;
+}
+
+.gradient-cta {
+    background-image: linear-gradient(120deg, rgb(0, 0, 0), rgb(0, 0, 0)), linear-gradient(120deg, #AD00FF, #ffffff, #00D1FF);
+    background-clip: padding-box, border-box;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
