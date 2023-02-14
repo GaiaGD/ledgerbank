@@ -29,7 +29,9 @@ function UserContextProvider({children}) {
 
     // data passed around the app
     const [userLoggedData, setUserLoggedData] = useState({})
+
 // _______________________________________________________________
+
 
 // timestamps for transactions:
 
@@ -62,12 +64,14 @@ function UserContextProvider({children}) {
     // use a useEffect that reloads the app everytime the document in the db changes
     useEffect(() => {
         onAuthStateChanged(auth, (currentUser) => {
+
             setUserLogged(currentUser)
             if (currentUser !== null){
                 onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
                     setUserLoggedData(doc.data())
                 })
             }
+
         })
     }, [])
 
@@ -150,7 +154,7 @@ function UserContextProvider({children}) {
 
         // pushing it in the db
         const userRef = doc(db, "users", user.uid)
-        await updateDoc(userRef, { checkingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [depositChecking.info, depositChecking.amount] })
+        await updateDoc(userRef, { checkingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-checking", depositChecking.info, depositChecking.amount] })
 
         // now the useEffect will refresh the userLoggedData
     }
