@@ -8,26 +8,30 @@ function CheckingBalance() {
 
     // local state for checking transactions history
 
-    // filter checking transactions only:
+    // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
-    let checkingTransactionsHistoryArray = dataAsArray.filter(i => i[1][0] === "transaction-checking")
+    let checkingTransactionsHistoryArray = (dataAsArray.filter(i => i[1][0] === "transaction-checking")).reverse()
 
     let checkingTransactionsHistory = checkingTransactionsHistoryArray.map(transaction => {
-        console.log(transaction)
+
+        // fix date
+        let transactionDate = (transaction[0]).substring(4,15)
+
         return (
-            <div>
-                <h1>{transaction[0]}</h1>
-                <h2>{transaction[1][2]}{userLoggedData.currency}</h2>
-                <h2>{transaction[1][1]}</h2>
+            <div key={transaction[0]} className="w-full border-b-2 border-slate-600 py-4">
+                <p className="font-light text-sm">{transactionDate}</p>
+                <div className="flex justify-between">
+                    <h2 className="font-semibold">{transaction[1][1]}</h2>
+                    <h2>{transaction[1][2]}{userLoggedData.currency}</h2>
+                </div>
             </div>
         )
     })
 
-//   const filtered = asArray.filter(([key, value]) => typeof value === 'string');
 
     return (
         <>
-            <div className="flex items-center justify-center h-screen">
+            <div className="flex items-center justify-center">
                 <div className="md:w-1/3 w-full">
                     <Link to="/">
                         <img className="object-contain mx-auto w-1/12 m-16" src="src/assets/ledger-logo.svg" />
@@ -96,7 +100,7 @@ function CheckingBalance() {
                          <h3 className="uppercase text-lg text-center">TRANSACTION HISTORY</h3>
                     </div>
                     <div className="flex justify-between">
-                        <div>
+                        <div className="w-full">
                             {checkingTransactionsHistory}
                         </div>
                     </div>
