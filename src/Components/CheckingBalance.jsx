@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 function CheckingBalance() {
 
-    const { depositToChecking, withdrawFromChecking, userLoggedData, sendToSaving, handleDepositChecking, depositChecking, withdrawChecking, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
+    const { depositToChecking, withdrawFromChecking, userLoggedData, sendToSaving, handleDepositChecking, handleWithdrawChecking, depositChecking, withdrawChecking, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
 
     // local state for checking transactions history
 
@@ -74,11 +74,11 @@ function CheckingBalance() {
                         <div className="w-3/6">
                             <div className="mr-2 pt-4 my-4 rounded-[40px] border-solid border-white border-4 bg-black">
                                 <div className="mx-2 flex">
-                                    <input className="w-full text-lg bg-transparent p-2 pr-0 text-white border-b-2 border-slate-600 outline-none text-right" placeholder="0" type="number" />
+                                    <input className="w-full text-lg bg-transparent p-2 pr-0 text-white border-b-2 border-slate-600 outline-none text-right" value={withdrawChecking.amount} name="amount" onChange={handleWithdrawChecking} placeholder="0" type="number" />
                                     <span className="border-b-2 border-slate-600 p-2 pt-[0.65rem]">{userLoggedData.currency}</span>
                                 </div>
                                 <div className="mx-2">
-                                    <input className="w-full text-lg bg-transparent p-2 outline-none text-right" placeholder="info" />
+                                    <input className="w-full text-lg bg-transparent p-2 outline-none text-right" value={withdrawChecking.info} name="info" onChange={handleWithdrawChecking} placeholder="info" />
                                 </div>
                                 <button className="mt-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={withdrawFromChecking} >
                                     <h3 className="uppercase font-bold text-lg">Withdraw</h3>
@@ -90,7 +90,7 @@ function CheckingBalance() {
                     <div className="flex justify-between my-4">
                         <div className="mr-2 rounded-[40px] border-solid border-white border-4 bg-black w-full flex">
                             <input className="w-full text-lg bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" />
-                            <span className="border-b-2 border-slate-600 p-2 pt-[1.4rem]">{userLoggedData.currency}</span>
+                            <span className="p-2 pt-[1.4rem]">{userLoggedData.currency}</span>
                             <button className="w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={sendToSaving}>
                                 <h3 className="uppercase font-bold text-lg">To saving</h3>
                             </button>

@@ -21,8 +21,8 @@ function UserContextProvider({children}) {
     const [userLogged, setUserLogged] = useState({})
 
     // checking transactions
-    const [depositChecking, setDepositChecking] = useState({amount: 0, info: ""})
-    const [withdrawChecking, setwithdrawChecking] = useState(0)
+    const [depositChecking, setDepositChecking] = useState({amount: "", info: ""})
+    const [withdrawChecking, setWithdrawChecking] = useState({amount: "", info: ""})
     // saving transactions
     const [depositSaving, setDepositSaving] = useState(0)
     const [withdrawSaving, setwithdrawSaving] = useState(0)
@@ -144,8 +144,16 @@ function UserContextProvider({children}) {
         })
     }
 
-    const depositToChecking = async () => {
+    function handleWithdrawChecking(event){
+        setWithdrawChecking(prevWithdrawChecking => {
+            return {
+            ...prevWithdrawChecking, [event.target.name]: event.target.value
+            }
+        })
+    }
 
+
+    const depositToChecking = async () => {
         const auth = getAuth()
         const user = auth.currentUser
 
@@ -156,11 +164,22 @@ function UserContextProvider({children}) {
         const userRef = doc(db, "users", user.uid)
         await updateDoc(userRef, { checkingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-checking", depositChecking.info, depositChecking.amount] })
 
-        // now the useEffect will refresh the userLoggedData
+        // now the useEffect and OnSnaposhot will refresh the userLoggedData
     }
 
-    function withdrawFromChecking(){
-        console.log("withdrawFromChecking")
+    const withdrawFromChecking = async () => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        // creating the new balance of current checking amount
+
+        let totalLessWithdraw = parseInt(userLoggedData.checkingBalance) - parseInt(withdrawChecking.amount)
+        console.log(totalLessWithdraw)
+
+        // pushing it in the db
+        const userRef = doc(db, "users", user.uid)
+        await updateDoc(userRef, { checkingBalance: parseFloat(totalLessWithdraw) , [timestamp]: [ "transaction-checking", withdrawChecking.info, withdrawChecking.amount] })
+
+        // now the useEffect and OnSnaposhot will refresh the userLoggedData
     }
 
     function sendToSaving(){
@@ -177,7 +196,7 @@ function UserContextProvider({children}) {
 // _______________________________________________________________
 
     return (
-        <UserContext.Provider value={{signinUp, currency, loggingIn, userLogged, userLoggedData, depositChecking, withdrawChecking, depositSaving, withdrawSaving, handleSignup, getCurrency, handleLogin, signUp, logIn, logOut, handleDepositChecking, depositToChecking, withdrawFromChecking, sendToSaving }}>
+        <UserContext.Provider value={{signinUp, currency, loggingIn, userLogged, userLoggedData, depositChecking, withdrawChecking, depositSaving, withdrawSaving, handleSignup, getCurrency, handleLogin, signUp, logIn, logOut, handleDepositChecking, handleWithdrawChecking, depositToChecking, withdrawFromChecking, sendToSaving }}>
             {children}
         </UserContext.Provider>
     )
