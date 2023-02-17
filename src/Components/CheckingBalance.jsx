@@ -65,7 +65,7 @@ function CheckingBalance() {
                                 <div className="mx-2">
                                     <input className="w-full text-lg bg-transparent p-2 outline-none text-right" value={depositChecking.info} name="info" onChange={handleDepositChecking} placeholder="info" />
                                 </div>
-                                <button className="mt-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent"  onClick={depositToChecking} >
+                                <button className="mt-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={depositToChecking} >
                                     <h3 className="uppercase font-bold text-lg">Deposit</h3>
                                 </button>
                             </div>

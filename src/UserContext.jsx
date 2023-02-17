@@ -154,31 +154,44 @@ function UserContextProvider({children}) {
 
 
     const depositToChecking = async () => {
-        const auth = getAuth()
-        const user = auth.currentUser
+        if(depositChecking.amount !== "" && depositChecking.info !== "" ){
+            const auth = getAuth()
+            const user = auth.currentUser
+            // creating the new balance of current checking amount
+            let totalPlusDeposit = parseInt(userLoggedData.checkingBalance) + parseInt(depositChecking.amount)
+            // pushing it in the db
+            const userRef = doc(db, "users", user.uid)
+            await updateDoc(userRef, { checkingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-checking", depositChecking.info, depositChecking.amount] })
+            setDepositChecking({amount: "", info: ""})
 
-        // creating the new balance of current checking amount
-        let totalPlusDeposit = parseInt(userLoggedData.checkingBalance) + parseInt(depositChecking.amount)
-
-        // pushing it in the db
-        const userRef = doc(db, "users", user.uid)
-        await updateDoc(userRef, { checkingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-checking", depositChecking.info, depositChecking.amount] })
-
+        } else if (depositChecking.amount == "" && depositChecking.info !== "" ){
+            alert("Enter amount")
+        } else if (depositChecking.amount !== "" && depositChecking.info == "" ){
+            alert("Enter deposit info")
+        } else {
+            alert("Enter amount and deposit info")
+        }
         // now the useEffect and OnSnaposhot will refresh the userLoggedData
     }
 
     const withdrawFromChecking = async () => {
-        const auth = getAuth()
-        const user = auth.currentUser
-        // creating the new balance of current checking amount
+        if(withdrawChecking.amount !== "" && withdrawChecking.info !== "" ){
+            const auth = getAuth()
+            const user = auth.currentUser
+            // creating the new balance of current checking amount
+            let totalLessWithdraw = parseInt(userLoggedData.checkingBalance) - parseInt(withdrawChecking.amount)
+            // pushing it in the db
+            const userRef = doc(db, "users", user.uid)
+            await updateDoc(userRef, { checkingBalance: parseFloat(totalLessWithdraw) , [timestamp]: [ "transaction-checking", withdrawChecking.info, withdrawChecking.amount] })
+            setWithdrawChecking({amount: "", info: ""})
 
-        let totalLessWithdraw = parseInt(userLoggedData.checkingBalance) - parseInt(withdrawChecking.amount)
-        console.log(totalLessWithdraw)
-
-        // pushing it in the db
-        const userRef = doc(db, "users", user.uid)
-        await updateDoc(userRef, { checkingBalance: parseFloat(totalLessWithdraw) , [timestamp]: [ "transaction-checking", withdrawChecking.info, withdrawChecking.amount] })
-
+        } else if (withdrawChecking.amount == "" && withdrawChecking.info !== "" ){
+            alert("Enter amount")
+        } else if (withdrawChecking.amount !== "" && withdrawChecking.info == "" ){
+            alert("Enter withdraw info")
+        } else {
+            alert("Enter amount and withdraw info")
+        }
         // now the useEffect and OnSnaposhot will refresh the userLoggedData
     }
 
