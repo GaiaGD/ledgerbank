@@ -4,25 +4,28 @@ import { Link } from "react-router-dom"
 
 function CheckingBalance() {
 
-    const { depositToChecking, withdrawFromChecking, userLoggedData, sendToSaving, handleDepositChecking, handleWithdrawChecking, depositChecking, withdrawChecking, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
+    const { depositToChecking, withdrawFromChecking, userLoggedData, handleSendToSaving, sendToSaving, handleDepositChecking, handleWithdrawChecking, depositChecking, withdrawChecking, sendingToSaving, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
 
     // local state for checking transactions history
 
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
-    let checkingTransactionsHistoryArray = (dataAsArray.filter(i => i[1][0] === "transaction-checking")).reverse()
+    let checkingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving"))).reverse()
 
     let checkingTransactionsHistory = checkingTransactionsHistoryArray.map(transaction => {
-
         // fix date
         let transactionDate = (transaction[0]).substring(4,15)
+        let transactionHour = (transaction[0]).substring(16,21)
 
         return (
             <div key={transaction[0]} className="w-full border-b-2 border-slate-600 py-4">
-                <p className="font-light text-sm">{transactionDate}</p>
+                <div className="flex justify-between">
+                    <p className="font-light text-sm">{transactionDate}</p>
+                    <p className="font-light text-sm">{transactionHour}</p>
+                </div>
                 <div className="flex justify-between">
                     <h2 className="font-semibold">{transaction[1][1]}</h2>
-                    <h2>{transaction[1][2]}{userLoggedData.currency}</h2>
+                    <h2 className="font-semibold">{transaction[1][2]}{userLoggedData.currency}</h2>
                 </div>
             </div>
         )
@@ -89,18 +92,18 @@ function CheckingBalance() {
                     </div>
                     <div className="flex justify-between my-4">
                         <div className="mr-2 rounded-[40px] border-solid border-white border-4 bg-black w-full flex">
-                            <input className="w-full text-lg bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" />
+                            <input className="w-full text-lg bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={sendingToSaving} onChange={handleSendToSaving} />
                             <span className="p-2 pt-[1.4rem]">{userLoggedData.currency}</span>
                             <button className="w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={sendToSaving}>
                                 <h3 className="uppercase font-bold text-lg">To saving</h3>
                             </button>
                         </div>
                     </div>
-                    <div className="bg-white text-black p-2 my-8 rounded-full md:w-4/6 w-full mx-auto">
+                    <div className="bg-white text-black p-2 mt-16 mb-8 rounded-full md:w-4/6 w-full mx-auto">
                          <h3 className="uppercase text-lg text-center">TRANSACTION HISTORY</h3>
                     </div>
                     <div className="flex justify-between">
-                        <div className="w-full">
+                        <div className="w-full mb-8">
                             {checkingTransactionsHistory}
                         </div>
                     </div>

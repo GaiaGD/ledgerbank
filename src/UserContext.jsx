@@ -23,6 +23,8 @@ function UserContextProvider({children}) {
     // checking transactions
     const [depositChecking, setDepositChecking] = useState({amount: "", info: ""})
     const [withdrawChecking, setWithdrawChecking] = useState({amount: "", info: ""})
+    const [sendingToSaving, setSendingToSaving] = useState("")
+
     // saving transactions
     const [depositSaving, setDepositSaving] = useState(0)
     const [withdrawSaving, setwithdrawSaving] = useState(0)
@@ -195,8 +197,25 @@ function UserContextProvider({children}) {
         // now the useEffect and OnSnaposhot will refresh the userLoggedData
     }
 
-    function sendToSaving(){
-        console.log("sendToSaving")
+    function handleSendToSaving(event){
+        setSendingToSaving(event.target.value)
+    }
+
+    const sendToSaving = async () => {
+        if(sendingToSaving !== ""){
+            const auth = getAuth()
+            const user = auth.currentUser
+            // creating the new balance of current checking amount after subtracting what I want to send to saving
+            let totalLessSentToSaving = parseInt(userLoggedData.checkingBalance) - parseInt(sendingToSaving)
+            let newSavingBalance = parseInt(userLoggedData.creditBalance) + parseInt(sendingToSaving)
+
+            const userRef = doc(db, "users", user.uid)
+            await updateDoc(userRef, { checkingBalance: parseFloat(totalLessSentToSaving) , creditBalance: parseFloat(newSavingBalance), [timestamp]: [ "transaction-ToSaving", "Transfer to Saving Account", sendingToSaving] })
+
+            setSendingToSaving("")
+        } else {
+            alert("Enter amount")
+        }
     }
 
 // _______________________________________________________________
@@ -209,7 +228,7 @@ function UserContextProvider({children}) {
 // _______________________________________________________________
 
     return (
-        <UserContext.Provider value={{signinUp, currency, loggingIn, userLogged, userLoggedData, depositChecking, withdrawChecking, depositSaving, withdrawSaving, handleSignup, getCurrency, handleLogin, signUp, logIn, logOut, handleDepositChecking, handleWithdrawChecking, depositToChecking, withdrawFromChecking, sendToSaving }}>
+        <UserContext.Provider value={{signinUp, currency, loggingIn, userLogged, userLoggedData, depositChecking, withdrawChecking, sendingToSaving, depositSaving, withdrawSaving, handleSignup, getCurrency, handleLogin, signUp, logIn, logOut, handleDepositChecking, handleWithdrawChecking, depositToChecking, withdrawFromChecking, handleSendToSaving, sendToSaving }}>
             {children}
         </UserContext.Provider>
     )
