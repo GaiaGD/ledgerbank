@@ -5,10 +5,7 @@ import InputAndInfo from "../Components/InputAndInfo"
 
 function CheckingBalance() {
 
-    const { depositToChecking, withdrawFromChecking, userLoggedData, handleSendToSaving, sendToSaving, handleDepositChecking, handleWithdrawChecking, depositChecking, withdrawChecking, sendingToSaving, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
-
-    // local state for checking transactions history
-
+    const { depositToChecking, withdrawFromChecking, userLoggedData, handleSendToCredit, sendToSaving, handleDepositChecking, handleWithdrawChecking, depositChecking, withdrawChecking, sendingToSaving, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
     let checkingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving"))).reverse()
@@ -43,15 +40,20 @@ function CheckingBalance() {
                     <h2 className="capitalize text-4xl text-center">Hello {userLoggedData.username}</h2>
 
                     <div className="my-4 w-full gradient-cta p-2 rounded-full bg-origin-border solid border-4 border-transparent flex justify-between">
-                        <div className="bg-white p-2 text-black p-2 rounded-full w-3/6">
-                            <h3 className="uppercase text-lg text-center">CHECKING</h3>
-                        </div>
                         <div className="p-2 rounded-full w-3/6">
-                            <h3 className="uppercase text-lg text-center">SAVING</h3>
+                            <Link to="/checkingBalance">
+                                <h3 className="uppercase text-lg text-center">CHECKING</h3>
+                            </Link>
+                        </div>
+                        <div className="bg-white p-2 text-black p-2 rounded-full w-3/6">
+                            <Link to="/savingBalance">
+                                <h3 className="uppercase text-lg text-center">SAVING</h3>
+                            </Link>
                         </div>
                     </div>
+
                     <div className="pt-16 pb-4">
-                        <h1 className="capitalize text-6xl text-center">{userLoggedData.checkingBalance}{userLoggedData.currency}</h1>
+                        <h1 className="capitalize text-6xl text-center">{userLoggedData.creditBalance}{userLoggedData.currency}</h1>
                     </div>
 
                     <div className="bg-white text-black p-2 rounded-full md:w-3/6 w-full mx-auto">
@@ -83,7 +85,7 @@ function CheckingBalance() {
 
                     <div className="flex justify-between my-4">
                         <div className="mr-2 rounded-[40px] border-solid border-white border-4 bg-black w-full flex">
-                            <input className="w-full text-lg bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={sendingToSaving} onChange={handleSendToSaving} />
+                            <input className="w-full text-lg bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={sendingToSaving} onChange={handleSendToCredit} />
                             <span className="p-2 pt-[1.4rem]">{userLoggedData.currency}</span>
                             <button className="w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={sendToSaving}>
                                 <h3 className="uppercase font-bold text-lg">To saving</h3>

@@ -7,6 +7,7 @@ import Intro from "./Pages/Intro"
 import Login from "./Pages/Login"
 import Signup from "./Pages/Signup"
 import CheckingBalance from "./Pages/CheckingBalance"
+import SavingBalance from "./Pages/SavingBalance"
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/checkingBalance" element={<CheckingBalance />} />
+          <Route exact path="/savingBalance" element={<SavingBalance />} />
       </Routes>
 
 

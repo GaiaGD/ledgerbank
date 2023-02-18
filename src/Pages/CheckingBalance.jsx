@@ -7,8 +7,6 @@ function CheckingBalance() {
 
     const { depositToChecking, withdrawFromChecking, userLoggedData, handleSendToSaving, sendToSaving, handleDepositChecking, handleWithdrawChecking, depositChecking, withdrawChecking, sendingToSaving, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
 
-    // local state for checking transactions history
-
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
     let checkingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving"))).reverse()
@@ -44,10 +42,15 @@ function CheckingBalance() {
 
                     <div className="my-4 w-full gradient-cta p-2 rounded-full bg-origin-border solid border-4 border-transparent flex justify-between">
                         <div className="bg-white p-2 text-black p-2 rounded-full w-3/6">
-                            <h3 className="uppercase text-lg text-center">CHECKING</h3>
+                            <Link to="/savingBalance">
+
+                                <h3 className="uppercase text-lg text-center">CHECKING</h3>
+                            </Link>
                         </div>
                         <div className="p-2 rounded-full w-3/6">
-                            <h3 className="uppercase text-lg text-center">SAVING</h3>
+                            <Link to="/savingBalance">
+                                <h3 className="uppercase text-lg text-center">SAVING</h3>
+                            </Link>
                         </div>
                     </div>
                     <div className="pt-16 pb-4">
