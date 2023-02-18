@@ -3,10 +3,10 @@ import { useState, useEffect, useContext } from "react"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "./utils/firebase-config"
 import { UserContext } from "./UserContext"
-import Intro from "./Components/Intro"
-import Login from "./Components/Login"
-import Signup from "./Components/Signup"
-import CheckingBalance from "./Components/CheckingBalance"
+import Intro from "./Pages/Intro"
+import Login from "./Pages/Login"
+import Signup from "./Pages/Signup"
+import CheckingBalance from "./Pages/CheckingBalance"
 
 function App() {
 
