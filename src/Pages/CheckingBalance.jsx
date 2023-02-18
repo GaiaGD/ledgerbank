@@ -1,6 +1,7 @@
 import { useState, useContext } from "react"
 import { UserContext } from "../UserContext"
 import { Link } from "react-router-dom"
+import InputAndInfo from "../Components/InputAndInfo"
 
 function CheckingBalance() {
 
@@ -59,37 +60,27 @@ function CheckingBalance() {
 
                     <div className="flex justify-between my-4">
                         {/* MAKE IT AS A COMPONENT */}
-                        <div className="w-3/6">
-                            <div className="mr-2 pt-4 my-4 rounded-[40px] border-solid border-white border-4 bg-black">
-                                <div className="mx-2 flex">
-                                    <input className="w-full text-lg bg-transparent p-2 pr-0 text-white border-b-2 border-slate-600 outline-none text-right" value={depositChecking.amount} name="amount" onChange={handleDepositChecking} placeholder="0" type="number" />
-                                    <span className="border-b-2 border-slate-600 p-2 pt-[0.65rem]">{userLoggedData.currency}</span>
-                                </div>
-                                <div className="mx-2">
-                                    <input className="w-full text-lg bg-transparent p-2 outline-none text-right" value={depositChecking.info} name="info" onChange={handleDepositChecking} placeholder="info" />
-                                </div>
-                                <button className="mt-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={depositToChecking} >
-                                    <h3 className="uppercase font-bold text-lg">Deposit</h3>
-                                </button>
-                            </div>
-                        </div>
 
-                        <div className="w-3/6">
-                            <div className="mr-2 pt-4 my-4 rounded-[40px] border-solid border-white border-4 bg-black">
-                                <div className="mx-2 flex">
-                                    <input className="w-full text-lg bg-transparent p-2 pr-0 text-white border-b-2 border-slate-600 outline-none text-right" value={withdrawChecking.amount} name="amount" onChange={handleWithdrawChecking} placeholder="0" type="number" />
-                                    <span className="border-b-2 border-slate-600 p-2 pt-[0.65rem]">{userLoggedData.currency}</span>
-                                </div>
-                                <div className="mx-2">
-                                    <input className="w-full text-lg bg-transparent p-2 outline-none text-right" value={withdrawChecking.info} name="info" onChange={handleWithdrawChecking} placeholder="info" />
-                                </div>
-                                <button className="mt-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={withdrawFromChecking} >
-                                    <h3 className="uppercase font-bold text-lg">Withdraw</h3>
-                                </button>
-                            </div>
-                        </div>
+                        <InputAndInfo
+                            currency={userLoggedData.currency}
+                            buttonCopy= "DEPOSIT"
+                            valueAmount={depositChecking.amount}
+                            valueInfo={depositChecking.info}
+                            onChange={handleDepositChecking}
+                            onClick={depositToChecking}
+                        />
+
+                        <InputAndInfo
+                            currency={userLoggedData.currency}
+                            buttonCopy= "WITHDRAW"
+                            valueAmount={withdrawChecking.amount}
+                            valueInfo={withdrawChecking.info}
+                            onChange={handleWithdrawChecking}
+                            onClick={withdrawFromChecking}
+                        />
 
                     </div>
+
                     <div className="flex justify-between my-4">
                         <div className="mr-2 rounded-[40px] border-solid border-white border-4 bg-black w-full flex">
                             <input className="w-full text-lg bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={sendingToSaving} onChange={handleSendToSaving} />
