@@ -24,6 +24,7 @@ function UserContextProvider({children}) {
     const [depositChecking, setDepositChecking] = useState({amount: "", info: ""})
     const [withdrawChecking, setWithdrawChecking] = useState({amount: "", info: ""})
     const [sendingToSaving, setSendingToSaving] = useState("")
+    const [sendingToChecking, setSendingToChecking] = useState("")
 
     // saving transactions
     const [depositSaving, setDepositSaving] = useState(0)
@@ -201,6 +202,10 @@ function UserContextProvider({children}) {
         setSendingToSaving(event.target.value)
     }
 
+    function handleSendToChecking(event){
+        setSendingToChecking(event.target.value)
+    }
+
     const sendToSaving = async () => {
         if(sendingToSaving !== ""){
             const auth = getAuth()
@@ -218,6 +223,23 @@ function UserContextProvider({children}) {
         }
     }
 
+    const sendToChecking = async () => {
+        if(sendingToChecking !== ""){
+            const auth = getAuth()
+            const user = auth.currentUser
+            // creating the new balance of current saving amount after subtracting what I want to send to checking
+            let totalLessSentToChecking = parseInt(userLoggedData.savingBalance) - parseInt(sendingToChecking)
+            let newCheckingBalance = parseInt(userLoggedData.checkingBalance) + parseInt(sendingToChecking)
+
+            const userRef = doc(db, "users", user.uid)
+            await updateDoc(userRef, { checkingBalance: parseFloat(totalLessSentToChecking) , creditBalance: parseFloat(newCheckingBalance), [timestamp]: [ "transaction-ToChecking", "Transfer to Checking Account", sendingToChecking] })
+
+            setSendingToChecking("")
+        } else {
+            alert("Enter amount")
+        }
+    }
+
 // _______________________________________________________________
 
     const logOut = async () => {
@@ -228,7 +250,31 @@ function UserContextProvider({children}) {
 // _______________________________________________________________
 
     return (
-        <UserContext.Provider value={{signinUp, currency, loggingIn, userLogged, userLoggedData, depositChecking, withdrawChecking, sendingToSaving, depositSaving, withdrawSaving, handleSignup, getCurrency, handleLogin, signUp, logIn, logOut, handleDepositChecking, handleWithdrawChecking, depositToChecking, withdrawFromChecking, handleSendToSaving, sendToSaving }}>
+        <UserContext.Provider value={{signinUp,
+        currency,
+        loggingIn,
+        userLogged,
+        userLoggedData,
+        depositChecking,
+        withdrawChecking,
+        sendingToSaving,
+        sendingToChecking,
+        depositSaving,
+        withdrawSaving,
+        handleSignup,
+        getCurrency,
+        handleLogin,
+        signUp,
+        logIn,
+        logOut,
+        handleDepositChecking,
+        handleWithdrawChecking,
+        depositToChecking,
+        withdrawFromChecking,
+        handleSendToSaving,
+        sendToSaving,
+        handleSendToChecking,
+        sendToChecking }}>
             {children}
         </UserContext.Provider>
     )
