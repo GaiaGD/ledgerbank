@@ -20,13 +20,13 @@ function Signup() {
         </Link>
 
         <div className="">
-          <input className="w-full py-4 px-8 my-4 rounded-full border-solid border-white border-4 bg-black text-lg font-light" placeholder="Username" name="username" value={signinUp.username} onChange={handleSignup} />
+          <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-4 bg-black text-lg font-light" placeholder="Username" name="username" value={signinUp.username} onChange={handleSignup} />
         </div>
         <div className="">
-          <input className="w-full py-4 px-8 my-4 rounded-full border-solid border-white border-4 bg-black text-lg font-light" placeholder="Email" name="email" value={signinUp.email} onChange={handleSignup} />
+          <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-4 bg-black text-lg font-light" placeholder="Email" name="email" value={signinUp.email} onChange={handleSignup} />
         </div>
         <div>
-          <input className="w-full py-4 px-8 my-4 rounded-full border-solid border-white border-4 bg-black text-lg font-light" placeholder="Password" name="password" value={signinUp.password} onChange={handleSignup} />
+          <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-4 bg-black text-lg font-light" placeholder="Password" name="password" value={signinUp.password} onChange={handleSignup} />
         </div>
 
         <div onClick={() => setClicked(true)}>
@@ -34,24 +34,24 @@ function Signup() {
           { !clicked ?
             // Try this with map later
             <div className="flex justify-between" >
-              <div className="py-4 px-6 my-4 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="$" name="$" > $ </div>
-              <div className="py-4 px-6 my-4 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="€" name="€" > € </div>
-              <div className="py-4 px-6 my-4 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="£" name="£" > £ </div>
-              <div className="py-4 px-6 my-4 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="¥" name="¥" > ¥ </div>
+              <div className="py-4 px-6 my-2 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="$" name="$" > $ </div>
+              <div className="py-4 px-6 my-2 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="€" name="€" > € </div>
+              <div className="py-4 px-6 my-2 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="£" name="£" > £ </div>
+              <div className="py-4 px-6 my-2 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="¥" name="¥" > ¥ </div>
             </div>
             :
             <div className="flex justify-between" >
-              <div style={ currency === "$" ? selected : notSelected } className="py-4 px-6 my-4 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="$" name="$" > $ </div>
-              <div style={ currency === "€" ? selected : notSelected } className="py-4 px-6 my-4 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="€" name="€" > € </div>
-              <div style={ currency === "£" ? selected : notSelected } className="py-4 px-6 my-4 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="£" name="£" > £ </div>
-              <div style={ currency === "¥" ? selected : notSelected } className="py-4 px-6 my-4 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="¥" name="¥" > ¥ </div>
+              <div style={ currency === "$" ? selected : notSelected } className="py-4 px-6 my-2 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="$" name="$" > $ </div>
+              <div style={ currency === "€" ? selected : notSelected } className="py-4 px-6 my-2 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="€" name="€" > € </div>
+              <div style={ currency === "£" ? selected : notSelected } className="py-4 px-6 my-2 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="£" name="£" > £ </div>
+              <div style={ currency === "¥" ? selected : notSelected } className="py-4 px-6 my-2 rounded-full border-solid border-white border-4 bg-black text-lg" onClick={getCurrency} id="¥" name="¥" > ¥ </div>
             </div>
           }
 
         </div>
 
         <Link to="/checkingBalance">
-          <button className="my-4 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={signUp} >
+          <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={signUp} >
             <h3 className="uppercase font-bold text-lg">Sign up</h3>
           </button>
         </Link>

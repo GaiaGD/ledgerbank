@@ -17,12 +17,12 @@ function Intro() {
           <img className="object-contain mx-auto w-1/6 m-16" src="src/assets/ledger-logo.svg" />
         </div>
         <Link to="/signup">
-          <button className="my-4 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" >
+          <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" >
             <h3 className="uppercase font-bold text-lg">Sign up</h3>
           </button>
         </Link>
         <Link to="/login">
-          <button className="my-4 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" >
+          <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" >
             <h3 className="uppercase font-bold text-lg">Login</h3>
           </button>
         </Link>
