@@ -18,15 +18,15 @@ function Login() {
         </Link>
 
         <div className="">
-          <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-4 bg-black text-base font-light" placeholder="Email" name="email" value={loggingIn.email} onChange={handleLogin} />
+          <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-2 bg-black text-base font-light" placeholder="Email" name="email" value={loggingIn.email} onChange={handleLogin} />
         </div>
         <div>
-          <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-4 bg-black text-base font-light" placeholder="Password" name="password" value={loggingIn.password} onChange={handleLogin} />
+          <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-2 bg-black text-base font-light" placeholder="Password" name="password" value={loggingIn.password} onChange={handleLogin} />
         </div>
 
 
         <Link to="/checkingBalance">
-          <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={logIn} >
+          <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={logIn} >
             <h3 className="uppercase font-bold text-base">Log in</h3>
           </button>
         </Link>
