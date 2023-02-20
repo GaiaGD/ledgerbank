@@ -24,11 +24,11 @@ function UserContextProvider({children}) {
     const [depositChecking, setDepositChecking] = useState({amount: "", info: ""})
     const [withdrawChecking, setWithdrawChecking] = useState({amount: "", info: ""})
     const [sendingToSaving, setSendingToSaving] = useState("")
-    const [sendingToChecking, setSendingToChecking] = useState("")
 
     // saving transactions
-    const [depositSaving, setDepositSaving] = useState(0)
-    const [withdrawSaving, setwithdrawSaving] = useState(0)
+    const [depositSaving, setDepositSaving] = useState({amount: "", info: ""})
+    const [withdrawSaving, setWithdrawSaving] = useState({amount: "", info: ""})
+    const [sendingToChecking, setSendingToChecking] = useState("")
 
     // data passed around the app
     const [userLoggedData, setUserLoggedData] = useState({})
@@ -104,7 +104,7 @@ function UserContextProvider({children}) {
         try {
             const user = await createUserWithEmailAndPassword(auth, signinUp.email, signinUp.password)
             // storing the user info when signing up
-            let fieldsData = {username: signinUp.username, email: signinUp.email, password: signinUp.password, currency: currency, creditBalance: 100, checkingBalance: 100}
+            let fieldsData = {username: signinUp.username, email: signinUp.email, password: signinUp.password, currency: currency, savingBalance: 100, checkingBalance: 100}
             
             // this data will be shared around all the pages and can be edited and resubmitted to db
             setUserLoggedData(fieldsData)
@@ -155,6 +155,22 @@ function UserContextProvider({children}) {
         })
     }
 
+    function handleDepositSaving(event){
+        setDepositSaving(prevDepositSaving => {
+            return {
+            ...prevDepositSaving, [event.target.name]: event.target.value
+            }
+        })
+    }
+
+    function handleWithdrawSaving(event){
+        setWithdrawSaving(prevWithdrawChecking => {
+            return {
+            ...prevWithdrawChecking, [event.target.name]: event.target.value
+            }
+        })
+    }
+
 
     const depositToChecking = async () => {
         if(depositChecking.amount !== "" && depositChecking.info !== "" ){
@@ -170,6 +186,27 @@ function UserContextProvider({children}) {
         } else if (depositChecking.amount == "" && depositChecking.info !== "" ){
             alert("Enter amount")
         } else if (depositChecking.amount !== "" && depositChecking.info == "" ){
+            alert("Enter deposit info")
+        } else {
+            alert("Enter amount and deposit info")
+        }
+        // now the useEffect and OnSnaposhot will refresh the userLoggedData
+    }
+
+    const depositToSaving = async () => {
+        if(depositSaving.amount !== "" && depositSaving.info !== "" ){
+            const auth = getAuth()
+            const user = auth.currentUser
+            // creating the new balance of current checking amount
+            let totalPlusDeposit = parseInt(userLoggedData.savingBalance) + parseInt(depositSaving.amount)
+            // pushing it in the db
+            const userRef = doc(db, "users", user.uid)
+            await updateDoc(userRef, { savingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-saving", depositSaving.info, depositSaving.amount] })
+            setDepositSaving({amount: "", info: ""})
+
+        } else if (depositSaving.amount == "" && depositSaving.info !== "" ){
+            alert("Enter amount")
+        } else if (depositSaving.amount !== "" && depositSaving.info == "" ){
             alert("Enter deposit info")
         } else {
             alert("Enter amount and deposit info")
@@ -198,6 +235,27 @@ function UserContextProvider({children}) {
         // now the useEffect and OnSnaposhot will refresh the userLoggedData
     }
 
+    const withdrawFromSaving = async () => {
+        if(withdrawSaving.amount !== "" && withdrawSaving.info !== "" ){
+            const auth = getAuth()
+            const user = auth.currentUser
+            // creating the new balance of current checking amount
+            let totalLessWithdraw = parseInt(userLoggedData.savingBalance) - parseInt(withdrawSaving.amount)
+            // pushing it in the db
+            const userRef = doc(db, "users", user.uid)
+            await updateDoc(userRef, { savingBalance: parseFloat(totalLessWithdraw) , [timestamp]: [ "transaction-saving", withdrawSaving.info, withdrawSaving.amount] })
+            setWithdrawSaving({amount: "", info: ""})
+
+        } else if (withdrawSaving.amount == "" && withdrawSaving.info !== "" ){
+            alert("Enter amount")
+        } else if (withdrawSaving.amount !== "" && withdrawSaving.info == "" ){
+            alert("Enter withdraw info")
+        } else {
+            alert("Enter amount and withdraw info")
+        }
+        // now the useEffect and OnSnaposhot will refresh the userLoggedData
+    }
+
     function handleSendToSaving(event){
         setSendingToSaving(event.target.value)
     }
@@ -212,10 +270,10 @@ function UserContextProvider({children}) {
             const user = auth.currentUser
             // creating the new balance of current checking amount after subtracting what I want to send to saving
             let totalLessSentToSaving = parseInt(userLoggedData.checkingBalance) - parseInt(sendingToSaving)
-            let newSavingBalance = parseInt(userLoggedData.creditBalance) + parseInt(sendingToSaving)
+            let newSavingBalance = parseInt(userLoggedData.savingBalance) + parseInt(sendingToSaving)
 
             const userRef = doc(db, "users", user.uid)
-            await updateDoc(userRef, { checkingBalance: parseFloat(totalLessSentToSaving) , creditBalance: parseFloat(newSavingBalance), [timestamp]: [ "transaction-ToSaving", "Transfer to Saving Account", sendingToSaving] })
+            await updateDoc(userRef, { checkingBalance: parseFloat(totalLessSentToSaving) , savingBalance: parseFloat(newSavingBalance), [timestamp]: [ "transaction-ToSaving", "Transfer to Saving Account", sendingToSaving] })
 
             setSendingToSaving("")
         } else {
@@ -232,7 +290,7 @@ function UserContextProvider({children}) {
             let newCheckingBalance = parseInt(userLoggedData.checkingBalance) + parseInt(sendingToChecking)
 
             const userRef = doc(db, "users", user.uid)
-            await updateDoc(userRef, { checkingBalance: parseFloat(totalLessSentToChecking) , creditBalance: parseFloat(newCheckingBalance), [timestamp]: [ "transaction-ToChecking", "Transfer to Checking Account", sendingToChecking] })
+            await updateDoc(userRef, { savingBalance: parseFloat(totalLessSentToChecking) , checkingBalance: parseFloat(newCheckingBalance), [timestamp]: [ "transaction-ToChecking", "Transfer to Checking Account", sendingToChecking] })
 
             setSendingToChecking("")
         } else {
@@ -267,14 +325,22 @@ function UserContextProvider({children}) {
         signUp,
         logIn,
         logOut,
+
         handleDepositChecking,
-        handleWithdrawChecking,
         depositToChecking,
+        handleWithdrawChecking,
         withdrawFromChecking,
         handleSendToSaving,
         sendToSaving,
+
+        handleDepositSaving,
+        depositToSaving,
+        handleWithdrawSaving,
+        withdrawFromSaving,
         handleSendToChecking,
-        sendToChecking }}>
+        sendToChecking
+        
+        }}>
             {children}
         </UserContext.Provider>
     )

@@ -15,7 +15,7 @@ function App() {
 
   return (
 
-    <div className="App">
+    <div className="App p-4">
 
       <Routes>
           <Route exact path="/" element={<Intro />} />

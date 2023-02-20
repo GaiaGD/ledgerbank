@@ -3,14 +3,27 @@ import { UserContext } from "../UserContext"
 import { Link } from "react-router-dom"
 import InputAndInfo from "../Components/InputAndInfo"
 
-function CheckingBalance() {
+function SavingBalance() {
 
-    const { depositToChecking, withdrawFromChecking, userLoggedData, handleSendToCredit, handleDepositChecking, handleWithdrawChecking, depositChecking, withdrawChecking, sendingToChecking, sendToChecking, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
+    const {
+        userLoggedData,
+        depositSaving,
+        withdrawSaving,
+        handleDepositSaving,
+        depositToSaving,
+        handleWithdrawSaving,
+        withdrawFromSaving,
+        handleSendToChecking,
+        sendingToChecking,
+        sendToChecking,
+        logOut
+    } = useContext(UserContext)
+    
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
-    let checkingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving" || i[1][0] === "transaction-ToChecking"))).reverse()
+    let savingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving" || i[1][0] === "transaction-ToChecking"))).reverse()
 
-    let checkingTransactionsHistory = checkingTransactionsHistoryArray.map(transaction => {
+    let savingTransactionsHistory = savingTransactionsHistoryArray.map(transaction => {
         // fix date
         let transactionDate = (transaction[0]).substring(4,15)
         let transactionHour = (transaction[0]).substring(16,21)
@@ -42,62 +55,61 @@ function CheckingBalance() {
                     <div className="my-4 w-full gradient-cta p-2 rounded-full bg-origin-border solid border-4 border-transparent flex justify-between">
                         <div className="p-2 rounded-full w-3/6">
                             <Link to="/checkingBalance">
-                                <h3 className="uppercase text-lg text-center">CHECKING</h3>
+                                <h3 className="uppercase text-base text-center">CHECKING</h3>
                             </Link>
                         </div>
                         <div className="bg-white p-2 text-black p-2 rounded-full w-3/6">
                             <Link to="/savingBalance">
-                                <h3 className="uppercase text-lg text-center">SAVING</h3>
+                                <h3 className="uppercase text-base text-center">SAVING</h3>
                             </Link>
                         </div>
                     </div>
 
                     <div className="pt-16 pb-4">
-                        <h1 className="capitalize text-6xl text-center">{userLoggedData.creditBalance}{userLoggedData.currency}</h1>
+                        <h1 className="capitalize text-6xl text-center">{userLoggedData.savingBalance}{userLoggedData.currency}</h1>
                     </div>
 
                     <div className="bg-white text-black p-2 rounded-full md:w-3/6 w-full mx-auto">
-                        <h3 className="uppercase text-lg text-center">TOTAL BALANCE</h3>
+                        <h3 className="uppercase text-base text-center">TOTAL BALANCE</h3>
                     </div>
 
                     <div className="flex justify-between my-4">
-                        {/* MAKE IT AS A COMPONENT */}
 
                         <InputAndInfo
                             currency={userLoggedData.currency}
                             buttonCopy= "DEPOSIT"
-                            valueAmount={depositChecking.amount}
-                            valueInfo={depositChecking.info}
-                            onChange={handleDepositChecking}
-                            onClick={depositToChecking}
+                            valueAmount={depositSaving.amount}
+                            valueInfo={depositSaving.info}
+                            onChange={handleDepositSaving}
+                            onClick={depositToSaving}
                         />
 
                         <InputAndInfo
                             currency={userLoggedData.currency}
                             buttonCopy= "WITHDRAW"
-                            valueAmount={withdrawChecking.amount}
-                            valueInfo={withdrawChecking.info}
-                            onChange={handleWithdrawChecking}
-                            onClick={withdrawFromChecking}
+                            valueAmount={withdrawSaving.amount}
+                            valueInfo={withdrawSaving.info}
+                            onChange={handleWithdrawSaving}
+                            onClick={withdrawFromSaving}
                         />
 
                     </div>
 
                     <div className="flex justify-between my-4">
                         <div className="mr-2 rounded-[40px] border-solid border-white border-4 bg-black w-full flex">
-                            <input className="w-full text-lg bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={sendingToChecking} onChange={handleSendToCredit} />
+                            <input className="w-full text-base bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={sendingToChecking} onChange={handleSendToChecking} />
                             <span className="p-2 pt-[1.4rem]">{userLoggedData.currency}</span>
                             <button className="w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={sendToChecking}>
-                                <h3 className="uppercase font-bold text-lg">To saving</h3>
+                                <h3 className="uppercase font-bold text-base">To checking</h3>
                             </button>
                         </div>
                     </div>
                     <div className="bg-white text-black p-2 mt-16 mb-8 rounded-full md:w-4/6 w-full mx-auto">
-                         <h3 className="uppercase text-lg text-center">TRANSACTION HISTORY</h3>
+                         <h3 className="uppercase text-base text-center">TRANSACTION HISTORY</h3>
                     </div>
                     <div className="flex justify-between">
                         <div className="w-full mb-8">
-                            {checkingTransactionsHistory}
+                            {savingTransactionsHistory}
                         </div>
                     </div>
 
@@ -106,4 +118,4 @@ function CheckingBalance() {
         </>)
 }
 
-export default CheckingBalance
+export default SavingBalance

@@ -5,7 +5,19 @@ import InputAndInfo from "../Components/InputAndInfo"
 
 function CheckingBalance() {
 
-    const { depositToChecking, withdrawFromChecking, userLoggedData, handleSendToSaving, sendToSaving, handleDepositChecking, handleWithdrawChecking, depositChecking, withdrawChecking, sendingToSaving, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
+    const {
+        userLoggedData,
+        depositChecking,
+        withdrawChecking,
+        handleDepositChecking,
+        depositToChecking,
+        handleWithdrawChecking,
+        withdrawFromChecking,
+        handleSendToSaving,
+        sendingToSaving,
+        sendToSaving,
+        logOut
+    } = useContext(UserContext)
 
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
