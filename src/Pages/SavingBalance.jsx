@@ -5,10 +5,10 @@ import InputAndInfo from "../Components/InputAndInfo"
 
 function CheckingBalance() {
 
-    const { depositToChecking, withdrawFromChecking, userLoggedData, handleSendToCredit, sendToSaving, handleDepositChecking, handleWithdrawChecking, depositChecking, withdrawChecking, sendingToSaving, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
+    const { depositToChecking, withdrawFromChecking, userLoggedData, handleSendToCredit, handleDepositChecking, handleWithdrawChecking, depositChecking, withdrawChecking, sendingToChecking, sendToChecking, depositSaving, withdrawSaving, currency, logOut } = useContext(UserContext)
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
-    let checkingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving"))).reverse()
+    let checkingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving" || i[1][0] === "transaction-ToChecking"))).reverse()
 
     let checkingTransactionsHistory = checkingTransactionsHistoryArray.map(transaction => {
         // fix date
@@ -85,9 +85,9 @@ function CheckingBalance() {
 
                     <div className="flex justify-between my-4">
                         <div className="mr-2 rounded-[40px] border-solid border-white border-4 bg-black w-full flex">
-                            <input className="w-full text-lg bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={sendingToSaving} onChange={handleSendToCredit} />
+                            <input className="w-full text-lg bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={sendingToChecking} onChange={handleSendToCredit} />
                             <span className="p-2 pt-[1.4rem]">{userLoggedData.currency}</span>
-                            <button className="w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={sendToSaving}>
+                            <button className="w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={sendToChecking}>
                                 <h3 className="uppercase font-bold text-lg">To saving</h3>
                             </button>
                         </div>

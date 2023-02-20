@@ -11,7 +11,7 @@ import SavingBalance from "./Pages/SavingBalance"
 
 function App() {
 
-  const {signinUp, loggingIn, userLogged, handleSignup, handleLogin, signUp, logIn, logOut} = useContext(UserContext)
+  // const {signinUp, loggingIn, userLogged, handleSignup, handleLogin, signUp, logIn, logOut} = useContext(UserContext)
 
   return (
 

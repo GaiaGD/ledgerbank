@@ -18,12 +18,12 @@ function Intro() {
         </div>
         <Link to="/signup">
           <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" >
-            <h3 className="uppercase font-bold text-lg">Sign up</h3>
+            <h3 className="uppercase font-bold text-base">Sign up</h3>
           </button>
         </Link>
         <Link to="/login">
           <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" >
-            <h3 className="uppercase font-bold text-lg">Login</h3>
+            <h3 className="uppercase font-bold text-base">Login</h3>
           </button>
         </Link>
       </div>

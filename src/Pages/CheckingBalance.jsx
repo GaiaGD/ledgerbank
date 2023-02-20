@@ -9,7 +9,7 @@ function CheckingBalance() {
 
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
-    let checkingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving"))).reverse()
+    let checkingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving" || i[1][0] === "transaction-ToChecking"))).reverse()
 
     let checkingTransactionsHistory = checkingTransactionsHistoryArray.map(transaction => {
         // fix date
@@ -44,12 +44,12 @@ function CheckingBalance() {
                         <div className="bg-white p-2 text-black p-2 rounded-full w-3/6">
                             <Link to="/savingBalance">
 
-                                <h3 className="uppercase text-lg text-center">CHECKING</h3>
+                                <h3 className="uppercase text-base text-center">CHECKING</h3>
                             </Link>
                         </div>
                         <div className="p-2 rounded-full w-3/6">
                             <Link to="/savingBalance">
-                                <h3 className="uppercase text-lg text-center">SAVING</h3>
+                                <h3 className="uppercase text-base text-center">SAVING</h3>
                             </Link>
                         </div>
                     </div>
@@ -58,7 +58,7 @@ function CheckingBalance() {
                     </div>
 
                     <div className="bg-white text-black p-2 rounded-full md:w-3/6 w-full mx-auto">
-                        <h3 className="uppercase text-lg text-center">TOTAL BALANCE</h3>
+                        <h3 className="uppercase text-base text-center">TOTAL BALANCE</h3>
                     </div>
 
                     <div className="flex justify-between my-4">
@@ -86,15 +86,15 @@ function CheckingBalance() {
 
                     <div className="flex justify-between my-4">
                         <div className="mr-2 rounded-[40px] border-solid border-white border-4 bg-black w-full flex">
-                            <input className="w-full text-lg bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={sendingToSaving} onChange={handleSendToSaving} />
+                            <input className="w-full text-base bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={sendingToSaving} onChange={handleSendToSaving} />
                             <span className="p-2 pt-[1.4rem]">{userLoggedData.currency}</span>
                             <button className="w-full gradient-cta p-4 rounded-full bg-origin-border solid border-4 border-transparent" onClick={sendToSaving}>
-                                <h3 className="uppercase font-bold text-lg">To saving</h3>
+                                <h3 className="uppercase font-bold text-base">To saving</h3>
                             </button>
                         </div>
                     </div>
                     <div className="bg-white text-black p-2 mt-16 mb-8 rounded-full md:w-4/6 w-full mx-auto">
-                         <h3 className="uppercase text-lg text-center">TRANSACTION HISTORY</h3>
+                         <h3 className="uppercase text-base text-center">TRANSACTION HISTORY</h3>
                     </div>
                     <div className="flex justify-between">
                         <div className="w-full mb-8">
