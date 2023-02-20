@@ -16,7 +16,8 @@ function CheckingBalance() {
         handleSendToSaving,
         sendingToSaving,
         sendToSaving,
-        logOut
+        logOut,
+        backHome
     } = useContext(UserContext)
 
     // filter checking transactions only (and reverse the order chronologically)
@@ -117,6 +118,8 @@ function CheckingBalance() {
                             {checkingTransactionsHistory}
                         </div>
                     </div>
+                    <div onClick={() => {logOut; backHome}}>Log Out</div>
+
 
                 </div>
             </div>

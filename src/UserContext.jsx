@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
 import { auth, db } from "./utils/firebase-config"
 import { getAuth } from "firebase/auth";
@@ -305,6 +306,12 @@ function UserContextProvider({children}) {
         setSigninUp({username: "", email: "", password: "", currency: ""})
         setLoggingIn({email: "", password: ""})
     }
+
+    function backHome (){
+        console.log("back home")
+        let navigate = useNavigate()
+        navigate("/")
+    }
 // _______________________________________________________________
 
     return (
@@ -325,6 +332,7 @@ function UserContextProvider({children}) {
         signUp,
         logIn,
         logOut,
+        backHome,
 
         handleDepositChecking,
         depositToChecking,
