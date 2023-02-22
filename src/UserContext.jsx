@@ -307,11 +307,7 @@ function UserContextProvider({children}) {
         setLoggingIn({email: "", password: ""})
     }
 
-    function backHome (){
-        console.log("back home")
-        let navigate = useNavigate()
-        navigate("/")
-    }
+
 // _______________________________________________________________
 
     return (
@@ -332,7 +328,6 @@ function UserContextProvider({children}) {
         signUp,
         logIn,
         logOut,
-        backHome,
 
         handleDepositChecking,
         depositToChecking,

@@ -9,11 +9,12 @@ function Intro() {
   const navigate = useNavigate()
   const {userLogged, logOut} = useContext(UserContext)
 
-  useEffect(() => {
-    if(userLogged) {
-      navigate("/checkingBalance")
-    }
-  }, [])
+  // useEffect(() => {
+  //   console.log(userLogged)
+  //   if(userLogged !== null) {
+  //     navigate("/checkingBalance")
+  //   }
+  // }, [])
 
   return (
 
