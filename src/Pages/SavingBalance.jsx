@@ -1,4 +1,5 @@
 import { useState, useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import { UserContext } from "../UserContext"
 import { Link } from "react-router-dom"
 import InputAndInfo from "../Components/InputAndInfo"
@@ -21,9 +22,15 @@ function SavingBalance() {
         logOut
     } = useContext(UserContext)
 
+    let navigate = useNavigate()
+    const backHome = () => {
+        logOut()
+        navigate("/")
+    }
+
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
-    let savingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving" || i[1][0] === "transaction-ToChecking"))).reverse()
+    let savingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-saving" || i[1][0] === "transaction-ToSaving" || i[1][0] === "transaction-ToChecking"))).reverse()
 
     let savingTransactionsHistory = savingTransactionsHistoryArray.map(transaction => {
         // fix date
@@ -96,15 +103,22 @@ function SavingBalance() {
                         buttonCopy= "To Checking"
                     />
 
-                    <div className="bg-white text-black p-2 mt-16 mb-8 rounded-full md:w-4/6 w-full mx-auto">
-                         <h3 className="uppercase text-base text-center">TRANSACTION HISTORY</h3>
-                    </div>
-                    <div className="flex justify-between">
-                        <div className="w-full mb-8">
-                            {savingTransactionsHistory}
-                        </div>
-                    </div>
+                    {savingTransactionsHistory.length > 0 &&
+                        <>
+                            <div className="bg-white text-black p-2 mt-16 mb-8 rounded-full md:w-4/6 w-full mx-auto">
+                                <h3 className="uppercase text-base text-center">TRANSACTION HISTORY</h3>
+                            </div>
+                            <div className="flex justify-between">
+                                <div className="w-full mb-8">
+                                    {savingTransactionsHistory}
+                                </div>
+                            </div>
+                        </>
+                    }
 
+                    <div className="my-8">
+                        <h2 className="underline underline-offset-4 text-center" onClick={backHome}>Log out</h2>
+                    </div>
                 </div>
             </div>
         </>)

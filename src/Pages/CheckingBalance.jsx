@@ -23,13 +23,11 @@ function CheckingBalance() {
     } = useContext(UserContext)
 
     let navigate = useNavigate()
-
     const backHome = () => {
         console.log("back home")
         logOut()
         navigate("/")
     }
-
 
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
@@ -105,19 +103,21 @@ function CheckingBalance() {
                         onClick={sendToSaving}
                         buttonCopy= "To saving"
                     />
-
-                    <div className="bg-white text-black p-2 mt-16 mb-8 rounded-full md:w-4/6 w-full mx-auto">
-                         <h3 className="uppercase text-base text-center">TRANSACTION HISTORY</h3>
-                    </div>
-                    <div className="flex justify-between">
-                        <div className="w-full mb-8">
-                            {checkingTransactionsHistory}
+                    {checkingTransactionsHistory.length > 0 &&
+                        <div className="max-h-96 overflow-auto mt-16 mb-8 ">
+                            <div className="bg-white text-black p-2 rounded-full md:w-4/6 w-full mx-auto sticky top-0 mb-4">
+                                <h3 className="uppercase text-base text-center">TRANSACTION HISTORY</h3>
+                            </div>
+                            <div className="flex justify-between">
+                                <div className="w-full mr-4">
+                                    {checkingTransactionsHistory}
+                                </div>
+                            </div>
                         </div>
+                    }
+                    <div className="my-8">
+                        <h2 className="underline underline-offset-4 text-center" onClick={backHome}>Log out</h2>
                     </div>
-                    {/* <div onClick={logOut}>Log Out</div> */}
-                    <div onClick={backHome}>Back home</div>
-                    <div onClick={logOut}>log out</div>
-
                 </div>
             </div>
         </>)

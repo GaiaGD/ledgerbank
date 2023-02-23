@@ -26,7 +26,7 @@ function Signup() {
           <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-2 bg-black text-base font-light" placeholder="Email" name="email" value={signinUp.email} onChange={handleSignup} />
         </div>
         <div>
-          <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-2 bg-black text-base font-light" placeholder="Password" name="password" value={signinUp.password} onChange={handleSignup} />
+          <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-2 bg-black text-base font-light" placeholder="Password" type="password" name="password" value={signinUp.password} onChange={handleSignup} />
         </div>
 
         <div onClick={() => setClicked(true)}>
@@ -55,10 +55,6 @@ function Signup() {
             <h3 className="uppercase font-bold text-base">Sign up</h3>
           </button>
         </Link>
-
-      {/* <h3>User Logged in:</h3>
-      {userLogged ? <h1>{userLogged.email}</h1> : <h1>You're logged out</h1>}
-      <div onClick={logOut}>Log Out</div> */}
 
       </div>
 
