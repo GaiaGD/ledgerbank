@@ -31,9 +31,9 @@ function Login() {
           </button>
         </Link>
 
-          <h3>User Logged in:</h3>
+          {/* <h3>User Logged in:</h3>
           {userLogged ? <h1>{userLogged.email}</h1> : <h1>You're logged out</h1>}
-          <div onClick={logOut}>Log Out</div>
+          <div onClick={logOut}>Log Out</div> */}
 
       </div>
     </div>
