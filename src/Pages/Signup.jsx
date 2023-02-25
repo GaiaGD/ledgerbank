@@ -50,11 +50,9 @@ function Signup() {
 
         </div>
 
-        <Link to="/checkingBalance">
-          <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={signUp} >
-            <h3 className="uppercase font-bold text-base">Sign up</h3>
-          </button>
-        </Link>
+          <Link to="/checkingBalance" className=" block my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={signUp} >
+            <h3 className="text-center uppercase font-bold text-base">Sign up</h3>
+          </Link>
 
       </div>
 

@@ -38,7 +38,7 @@ function SavingBalance() {
         let transactionHour = (transaction[0]).substring(16,21)
 
         return (
-            <div key={transaction[0]} className="w-full border-b-2 border-slate-600 py-4">
+            <div key={transaction[0]} className="w-full border-b-2 border-slate-900 pt-8 pb-4 last:border-b-0">
                 <div className="flex justify-between">
                     <p className="font-light text-sm">{transactionDate}</p>
                     <p className="font-light text-sm">{transactionHour}</p>
@@ -104,16 +104,20 @@ function SavingBalance() {
                     />
 
                     {savingTransactionsHistory.length > 0 &&
-                        <>
-                            <div className="bg-white text-black p-2 mt-16 mb-8 rounded-full md:w-4/6 w-full mx-auto">
+                    <>
+                        <div className="relative border-t-2 border-white border-solid mt-16">
+                            <div className="absolute -top-[1.3em] inset-x-[15%] bg-white text-black p-2 rounded-full w-[70%] mx-auto">
                                 <h3 className="uppercase text-base text-center">TRANSACTION HISTORY</h3>
                             </div>
+                        </div>
+                        <div className="max-h-96 overflow-auto mb-4 border-b-2 border-white border-solid">
                             <div className="flex justify-between">
-                                <div className="w-full mb-8">
+                                <div className="w-full mr-4">
                                     {savingTransactionsHistory}
                                 </div>
                             </div>
-                        </>
+                        </div>
+                    </>
                     }
 
                     <div className="my-8">

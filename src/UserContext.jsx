@@ -21,6 +21,8 @@ function UserContextProvider({children}) {
     const [loggingIn, setLoggingIn] = useState({email: "", password: ""})
     const [userLogged, setUserLogged] = useState({})
 
+    const [loginError, setLoginError] = useState(true)
+
     // checking transactions
     const [depositChecking, setDepositChecking] = useState({amount: "", info: ""})
     const [withdrawChecking, setWithdrawChecking] = useState({amount: "", info: ""})
@@ -42,8 +44,6 @@ function UserContextProvider({children}) {
     let dateRaw = new Date()
     let date = dateRaw.toString()
     let timestamp = date.replace(/-/g, ' ')
-
-
 
     // this checks that everytime the app loads, if no one is logged in, the current user is null, but if someone logs in, the current user will be automatically assigned to him
     useEffect(() => {
@@ -106,12 +106,12 @@ function UserContextProvider({children}) {
             const user = await createUserWithEmailAndPassword(auth, signinUp.email, signinUp.password)
             // storing the user info when signing up
             let fieldsData = {username: signinUp.username, email: signinUp.email, password: signinUp.password, currency: currency, savingBalance: 100, checkingBalance: 100}
-            
+
+            // MORE DATA TO BE ADDED FOR THEMES & BALANCES
+            await setDoc(doc(db, "users", user.user.uid), fieldsData)
+                        
             // this data will be shared around all the pages and can be edited and resubmitted to db
             setUserLoggedData(fieldsData)
-
-            // MORE fields DATA TO BE ADDED FOR THEMES & BALANCES
-            await setDoc(doc(db, "users", user.user.uid), fieldsData)
 
         } catch (error){
             console.log(error.message)
@@ -120,6 +120,7 @@ function UserContextProvider({children}) {
     }
 
     const logIn = async () => {
+
         try {
             const user = await signInWithEmailAndPassword(auth, loggingIn.email, loggingIn.password)
 
@@ -127,15 +128,18 @@ function UserContextProvider({children}) {
             const docRef = doc(db, "users", user.user.uid)
             const docSnap = await getDoc(docRef)
         
-        if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data())
-        } else {
-          // doc.data() will be undefined in this case
-            console.log("No such data!")
-        }
+            if (docSnap.exists()) {
+                console.log("Document data:", docSnap.data())
+            } else {
+            // doc.data() will be undefined in this case
+                console.log("No such data!")
+            }
 
         } catch (error){
+            setLoginError(true)
             console.log(error.message)
+            alert(error.message)
+
             setLoggingIn({email: "", password: ""})
         }
     }
@@ -314,6 +318,7 @@ function UserContextProvider({children}) {
         <UserContext.Provider value={{signinUp,
         currency,
         loggingIn,
+        loginError,
         userLogged,
         userLoggedData,
         depositChecking,
