@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react"
-import { useNavigate } from "react-router-dom"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
 import { auth, db } from "./utils/firebase-config"
 import { getAuth } from "firebase/auth";
@@ -20,8 +19,6 @@ function UserContextProvider({children}) {
     // data collected on login
     const [loggingIn, setLoggingIn] = useState({email: "", password: ""})
     const [userLogged, setUserLogged] = useState({})
-
-    const [loginError, setLoginError] = useState(true)
 
     // checking transactions
     const [depositChecking, setDepositChecking] = useState({amount: "", info: ""})
@@ -119,11 +116,11 @@ function UserContextProvider({children}) {
         }
     }
 
-    const logIn = async () => {
-
+    const logIn = async (event) => {
+        console.log(event)
         try {
-            const user = await signInWithEmailAndPassword(auth, loggingIn.email, loggingIn.password)
 
+            const user = await signInWithEmailAndPassword(auth, loggingIn.email, loggingIn.password)
             // matching user logged with user in db
             const docRef = doc(db, "users", user.user.uid)
             const docSnap = await getDoc(docRef)
@@ -136,10 +133,7 @@ function UserContextProvider({children}) {
             }
 
         } catch (error){
-            setLoginError(true)
-            console.log(error.message)
             alert(error.message)
-
             setLoggingIn({email: "", password: ""})
         }
     }
@@ -318,7 +312,6 @@ function UserContextProvider({children}) {
         <UserContext.Provider value={{signinUp,
         currency,
         loggingIn,
-        loginError,
         userLogged,
         userLoggedData,
         depositChecking,
