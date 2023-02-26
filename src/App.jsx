@@ -6,6 +6,9 @@ import { UserContext } from "./UserContext"
 import Intro from "./Pages/Intro"
 import Login from "./Pages/Login"
 import Signup from "./Pages/Signup"
+
+import PrivateRoute from "./utils/PrivateRoute"
+
 import CheckingBalance from "./Pages/CheckingBalance"
 import SavingBalance from "./Pages/SavingBalance"
 
@@ -19,10 +22,17 @@ function App() {
 
       <Routes>
           <Route exact path="/" element={<Intro />} />
+          <Route exact path="/signup" element={<Signup />} />          
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/signup" element={<Signup />} />
-          <Route exact path="/checkingBalance" element={<CheckingBalance />} />
-          <Route exact path="/savingBalance" element={<SavingBalance />} />
+          
+          <Route element={<PrivateRoute userLogged={userLogged} />}>
+            <Route exact path="/checkingBalance" element={<CheckingBalance />} />
+          </Route>
+          
+          <Route element={<PrivateRoute userLogged={userLogged} />}>
+            <Route exact path="/savingBalance" element={<SavingBalance />} />
+          </Route>
+          
       </Routes>
 
 

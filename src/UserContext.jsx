@@ -116,12 +116,13 @@ function UserContextProvider({children}) {
         }
     }
 
-    const logIn = async (event) => {
-        console.log(event)
+    const logIn = async () => {
         try {
-
             const user = await signInWithEmailAndPassword(auth, loggingIn.email, loggingIn.password)
-            // matching user logged with user in db
+            console.log(user)
+            console.log(userLogged)
+
+            // matching user logged with user in db and all the data linked to him
             const docRef = doc(db, "users", user.user.uid)
             const docSnap = await getDoc(docRef)
         
@@ -133,6 +134,9 @@ function UserContextProvider({children}) {
             }
 
         } catch (error){
+            console.log(error.message)
+            console.log(userLogged)
+
             alert(error.message)
             setLoggingIn({email: "", password: ""})
         }
