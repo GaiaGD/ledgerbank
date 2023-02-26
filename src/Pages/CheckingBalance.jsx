@@ -9,6 +9,7 @@ import SendBetweenAccounts from "../Components/SendBetweenAccounts"
 function CheckingBalance() {
 
     const {
+        userLogged,
         userLoggedData,
         depositChecking,
         withdrawChecking,
