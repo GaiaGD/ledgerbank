@@ -18,7 +18,7 @@ function UserContextProvider({children}) {
 
     // data collected on login
     const [loggingIn, setLoggingIn] = useState({email: "", password: ""})
-    const [userLogged, setUserLogged] = useState({})
+    const [ userLogged, setUserLogged] = useState({})
 
     // checking transactions
     const [depositChecking, setDepositChecking] = useState({amount: "", info: ""})
@@ -119,9 +119,6 @@ function UserContextProvider({children}) {
     const logIn = async () => {
         try {
             const user = await signInWithEmailAndPassword(auth, loggingIn.email, loggingIn.password)
-            console.log(user)
-            console.log(userLogged)
-
             // matching user logged with user in db and all the data linked to him
             const docRef = doc(db, "users", user.user.uid)
             const docSnap = await getDoc(docRef)
@@ -135,7 +132,6 @@ function UserContextProvider({children}) {
 
         } catch (error){
             console.log(error.message)
-            console.log(userLogged)
 
             alert(error.message)
             setLoggingIn({email: "", password: ""})

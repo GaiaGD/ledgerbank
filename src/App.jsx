@@ -2,6 +2,8 @@ import { Routes, Route } from "react-router-dom"
 import { useState, useEffect, useContext } from "react"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "./utils/firebase-config"
+import { getAuth } from "firebase/auth";
+
 import { UserContext } from "./UserContext"
 import Intro from "./Pages/Intro"
 import Login from "./Pages/Login"

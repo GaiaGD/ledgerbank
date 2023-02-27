@@ -1,18 +1,23 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useContext, useEffect } from "react"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
+import { getAuth } from "firebase/auth";
+
 import { auth } from "../utils/firebase-config"
 import { UserContext } from "../UserContext"
 
 function Login() {
   let navigate = useNavigate();
   const {loggingIn, userLogged, handleLogin, logIn, logOut} = useContext(UserContext)
-
+  
+  
   function goToChecking(){
+  // i have to wait for the userLogged value to change when authenticated or the checkingpage would go back to login
     setTimeout(() => {
       return navigate('/checkingBalance')
     }, "500")
   }
+
 
   return (
 
@@ -29,7 +34,7 @@ function Login() {
           <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-2 bg-black text-base font-light" placeholder="Password" type="password" name="password" value={loggingIn.password} onChange={handleLogin} />
         </div>
         
-        <Link to="/checkingBalance" className="block my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={() => {logIn(), goToChecking()}} >
+        <Link to="/checkingBalance" className="block my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={() => {logIn(); goToChecking()}} >
             <h3 className="uppercase font-bold text-base text-center">Log in</h3>
         </Link>
 
