@@ -30,8 +30,11 @@ function UserContextProvider({children}) {
     const [withdrawSaving, setWithdrawSaving] = useState({amount: "", info: ""})
     const [sendingToChecking, setSendingToChecking] = useState("")
 
-    // data passed around the app
+    // data of the user passed around the app
     const [userLoggedData, setUserLoggedData] = useState({})
+
+    // errors
+    const [loginError, setLoginError] = useState('')
 
 // _______________________________________________________________
 
@@ -129,13 +132,18 @@ function UserContextProvider({children}) {
             // doc.data() will be undefined in this case
                 console.log("No such data!")
             }
+            setLoginError('')
 
         } catch (error){
-            console.log(error.message)
-
-            alert(error.message)
+            // console.log(error.message)
+            setLoginError("Invalid email or password")
+            // alert(error.message)
             setLoggingIn({email: "", password: ""})
         }
+    }
+
+    function cleanLoginError(){
+        setLoginError('')
     }
 
     function handleDepositChecking(event){
@@ -176,7 +184,7 @@ function UserContextProvider({children}) {
             const auth = getAuth()
             const user = auth.currentUser
             // creating the new balance of current checking amount
-            let totalPlusDeposit = parseInt(userLoggedData.checkingBalance) + parseInt(depositChecking.amount)
+            let totalPlusDeposit = parseFloat(userLoggedData.checkingBalance) + parseFloat(depositChecking.amount)
             // pushing it in the db
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { checkingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-checking", depositChecking.info, depositChecking.amount] })
@@ -197,7 +205,7 @@ function UserContextProvider({children}) {
             const auth = getAuth()
             const user = auth.currentUser
             // creating the new balance of current checking amount
-            let totalPlusDeposit = parseInt(userLoggedData.savingBalance) + parseInt(depositSaving.amount)
+            let totalPlusDeposit = parseFloat(userLoggedData.savingBalance) + parseFloat(depositSaving.amount)
             // pushing it in the db
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { savingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-saving", depositSaving.info, depositSaving.amount] })
@@ -218,7 +226,7 @@ function UserContextProvider({children}) {
             const auth = getAuth()
             const user = auth.currentUser
             // creating the new balance of current checking amount
-            let totalLessWithdraw = parseInt(userLoggedData.checkingBalance) - parseInt(withdrawChecking.amount)
+            let totalLessWithdraw = parseFloat(userLoggedData.checkingBalance) - parseFloat(withdrawChecking.amount)
             // pushing it in the db
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { checkingBalance: parseFloat(totalLessWithdraw) , [timestamp]: [ "transaction-checking", withdrawChecking.info, withdrawChecking.amount] })
@@ -239,7 +247,7 @@ function UserContextProvider({children}) {
             const auth = getAuth()
             const user = auth.currentUser
             // creating the new balance of current checking amount
-            let totalLessWithdraw = parseInt(userLoggedData.savingBalance) - parseInt(withdrawSaving.amount)
+            let totalLessWithdraw = parseFloat(userLoggedData.savingBalance) - parseFloat(withdrawSaving.amount)
             // pushing it in the db
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { savingBalance: parseFloat(totalLessWithdraw) , [timestamp]: [ "transaction-saving", withdrawSaving.info, withdrawSaving.amount] })
@@ -268,8 +276,8 @@ function UserContextProvider({children}) {
             const auth = getAuth()
             const user = auth.currentUser
             // creating the new balance of current checking amount after subtracting what I want to send to saving
-            let totalLessSentToSaving = parseInt(userLoggedData.checkingBalance) - parseInt(sendingToSaving)
-            let newSavingBalance = parseInt(userLoggedData.savingBalance) + parseInt(sendingToSaving)
+            let totalLessSentToSaving = parseFloat(userLoggedData.checkingBalance) - parseFloat(sendingToSaving)
+            let newSavingBalance = parseFloat(userLoggedData.savingBalance) + parseFloat(sendingToSaving)
 
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { checkingBalance: parseFloat(totalLessSentToSaving) , savingBalance: parseFloat(newSavingBalance), [timestamp]: [ "transaction-ToSaving", "Transfer to Saving Account", sendingToSaving] })
@@ -285,8 +293,8 @@ function UserContextProvider({children}) {
             const auth = getAuth()
             const user = auth.currentUser
             // creating the new balance of current saving amount after subtracting what I want to send to checking
-            let totalLessSentToChecking = parseInt(userLoggedData.savingBalance) - parseInt(sendingToChecking)
-            let newCheckingBalance = parseInt(userLoggedData.checkingBalance) + parseInt(sendingToChecking)
+            let totalLessSentToChecking = parseFloat(userLoggedData.savingBalance) - parseFloat(sendingToChecking)
+            let newCheckingBalance = parseFloat(userLoggedData.checkingBalance) + parseFloat(sendingToChecking)
 
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { savingBalance: parseFloat(totalLessSentToChecking) , checkingBalance: parseFloat(newCheckingBalance), [timestamp]: [ "transaction-ToChecking", "Transfer to Checking Account", sendingToChecking] })
@@ -339,7 +347,10 @@ function UserContextProvider({children}) {
         handleWithdrawSaving,
         withdrawFromSaving,
         handleSendToChecking,
-        sendToChecking
+        sendToChecking,
+
+        loginError,
+        cleanLoginError
         
         }}>
             {children}

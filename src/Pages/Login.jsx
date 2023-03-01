@@ -1,15 +1,17 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useContext, useEffect } from "react"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
-import { getAuth } from "firebase/auth";
-
-import { auth } from "../utils/firebase-config"
 import { UserContext } from "../UserContext"
 
 function Login() {
-  const {loggingIn, userLogged, handleLogin, logIn, logOut} = useContext(UserContext)
-  const [logged, setLogged] = useState('')
-  let navigate = useNavigate();
+  const {loggingIn, userLogged, handleLogin, logIn, loginError, cleanLoginError} = useContext(UserContext)
+  let navigate = useNavigate()
+
+  // making sure it doesn't load previous mistakes if i refresh the page or visit it again
+  useEffect(() => {
+    cleanLoginError()
+  }, [])
+
+  const [modal, setModal] = useState(false)
 
   // ALSO A GOOD SOLUTION
   // function goToChecking(){
@@ -19,15 +21,21 @@ function Login() {
   //   }, "500")
   // }
 
-  // function goToChecking(){
-  //   setLogged(userLogged)
-  // }
 
+  // every time i click on login (function from usecontext) the content of userLogged changes so it triggers useEffect, and allows the user to go to checkingbalance that is a private route, only accessible if userLogged is populated
   useEffect(() => {
     if (userLogged !== null){
+      cleanLoginError()
       return navigate('/checkingBalance')
     }
   }, [userLogged])
+
+  // every time i click on login (function from usecontext) if i receive an error, it saves it in a state, so it triggers useEffect that shows the error modal
+  useEffect(() => {
+    if (loginError !== ''){
+      setModal(true)
+    }
+  }, [loginError])
 
   return (
 
@@ -43,8 +51,12 @@ function Login() {
         <div>
           <input className="w-full py-4 px-8 my-2 rounded-full border-solid border-white border-2 bg-black text-base font-light" placeholder="Password" type="password" name="password" value={loggingIn.password} onChange={handleLogin} />
         </div>
-        
-        <div to="/checkingBalance" className="block my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={logIn} >
+
+        <div className="h-7">
+          { modal && <p className="text-red-900 text-sm text-center">{loginError}</p>}
+        </div>
+
+        <div to="/checkingBalance" className="block my-2 w-full gradient-cta mt-8 p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={logIn} >
             <h3 className="uppercase font-bold text-base text-center">Log in</h3>
         </div>
         <div className="my-8">
@@ -53,6 +65,8 @@ function Login() {
           </Link>
         </div>
       </div>
+
+
     </div>
   )
 

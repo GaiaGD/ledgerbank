@@ -7,7 +7,6 @@ import { UserContext } from "../UserContext"
 import CheckingOrSaving from "../Components/CheckingOrSaving"
 
 function Intro() {
-  const navigate = useNavigate()
   const {userLogged, userLoggedData, logOut} = useContext(UserContext)
   
     return (
@@ -21,10 +20,11 @@ function Intro() {
                 ?
                 <div>
                   <div className="">
-                    <img className="object-contain mx-auto w-1/6 m-16" src="src/assets/ledger-logo.svg" />
+                    <img className="object-contain mx-auto w-2/3 m-16" src="src/assets/ledger-logotype.svg" />
                   </div>
-                  <div>
-                    <h2 className="capitalize text-4xl text-center">Hello {userLoggedData.username}</h2>
+                  <div className="text-center">
+                    <h2 className="capitalize text-4xl">Hello {userLoggedData.username}</h2>
+                    <h3 className="mt-16 mb-4 mx-[25%]">What account would you like to view?</h3>
                     <CheckingOrSaving selected={""} />
                   </div>
                   <div className="my-16">
@@ -36,11 +36,11 @@ function Intro() {
                 
                 <div>
                   <div className="">
-                    <img className="object-contain mx-auto w-1/6 m-16" src="src/assets/ledger-logo.svg" />
+                    <img className="object-contain mx-auto w-2/3 m-16" src="src/assets/ledger-logotype.svg" />
                   </div>
                   <Link to="/signup">
                     <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" >
-                      <h3 className="uppercase font-bold text-base">Sign up</h3>
+                      <h3 className="uppercase font-bold text-base">Create Account</h3>
                     </button>
                   </Link>
                   <Link to="/login">
@@ -49,6 +49,7 @@ function Intro() {
                     </button>
                   </Link>
                 </div>
+                
               }
               </div>
             </div>

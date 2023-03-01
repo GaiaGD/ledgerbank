@@ -9,7 +9,6 @@ import SendBetweenAccounts from "../Components/SendBetweenAccounts"
 function CheckingBalance() {
 
     const {
-        userLogged,
         userLoggedData,
         depositChecking,
         withdrawChecking,
@@ -21,6 +20,7 @@ function CheckingBalance() {
         sendingToSaving,
         sendToSaving,
         logOut,
+        loginError
     } = useContext(UserContext)
 
     let navigate = useNavigate()
@@ -28,7 +28,6 @@ function CheckingBalance() {
         logOut()
         navigate("/")
     }
-
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
     let checkingTransactionsHistoryArray = (dataAsArray.filter(i => (i[1][0] === "transaction-checking" || i[1][0] === "transaction-ToSaving" || i[1][0] === "transaction-ToChecking"))).reverse()
@@ -39,7 +38,7 @@ function CheckingBalance() {
         let transactionHour = (transaction[0]).substring(16,21)
 
         return (
-            <div key={transaction[0]} className="w-full border-b-2 border-slate-900 pt-8 pb-4 last:border-b-0">
+            <div key={transaction[0]} className="w-full border-b-2 border-slate-900 first:pt-10 pt-4 pb-4 last:border-b-0">
                 <div className="flex justify-between">
                     <p className="font-light text-sm">{transactionDate}</p>
                     <p className="font-light text-sm">{transactionHour}</p>
@@ -65,7 +64,7 @@ function CheckingBalance() {
                     <CheckingOrSaving selected={"CHECKING"} />
 
                     <div className="pt-4 pb-8">
-                        <h1 className="capitalize text-6xl text-center">{userLoggedData.checkingBalance}{userLoggedData.currency}</h1>
+                        <h1 className="capitalize text-6xl text-center truncate">{userLoggedData.checkingBalance}{userLoggedData.currency}</h1>
                     </div>
 
                     <div className="relative h-8 border-t-2 border-white border-solid">

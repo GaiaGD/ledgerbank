@@ -38,7 +38,7 @@ function SavingBalance() {
         let transactionHour = (transaction[0]).substring(16,21)
 
         return (
-            <div key={transaction[0]} className="w-full border-b-2 border-slate-900 pt-8 pb-4 last:border-b-0">
+            <div key={transaction[0]} className="w-full border-b-2 border-slate-900 first:pt-10 pt-4 pb-4 last:border-b-0">
                 <div className="flex justify-between">
                     <p className="font-light text-sm">{transactionDate}</p>
                     <p className="font-light text-sm">{transactionHour}</p>
@@ -64,7 +64,7 @@ function SavingBalance() {
                     <CheckingOrSaving selected={"SAVING"} />
 
                     <div className="pt-4 pb-8">
-                        <h1 className="capitalize text-6xl text-center">{userLoggedData.savingBalance}{userLoggedData.currency}</h1>
+                        <h1 className="capitalize text-6xl text-center truncate">{userLoggedData.savingBalance}{userLoggedData.currency}</h1>
                     </div>
 
                     <div className="relative h-8 border-t-2 border-white border-solid">
