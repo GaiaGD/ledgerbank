@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import { auth, db } from "./utils/firebase-config"
 import { getAuth } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc, onSnapshot, collection } from "firebase/firestore"; 
-import { async } from "@firebase/util";
+// import { async } from "@firebase/util";
 
 
 const UserContext = React.createContext()
