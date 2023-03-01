@@ -11,7 +11,7 @@ function Login() {
     cleanLoginError()
   }, [])
 
-  const [modal, setModal] = useState(false)
+  const [error, setError] = useState(false)
 
   // ALSO A GOOD SOLUTION
   // function goToChecking(){
@@ -30,10 +30,10 @@ function Login() {
     }
   }, [userLogged])
 
-  // every time i click on login (function from usecontext) if i receive an error, it saves it in a state, so it triggers useEffect that shows the error modal
+  // every time i click on login (function from usecontext) if i receive an error, it saves it in a state, so it triggers useEffect that shows the error Error
   useEffect(() => {
     if (loginError !== ''){
-      setModal(true)
+      setError(true)
     }
   }, [loginError])
 
@@ -53,10 +53,10 @@ function Login() {
         </div>
 
         <div className="h-7">
-          { modal && <p className="text-red-900 text-sm text-center">{loginError}</p>}
+          { error && <p className="text-red-900 text-sm text-center">{loginError}</p>}
         </div>
 
-        <div to="/checkingBalance" className="block my-2 w-full gradient-cta mt-8 p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={logIn} >
+        <div to="/checkingBalance" className="w-full gradient-cta mt-4 p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={logIn} >
             <h3 className="uppercase font-bold text-base text-center">Log in</h3>
         </div>
         <div className="my-8">
