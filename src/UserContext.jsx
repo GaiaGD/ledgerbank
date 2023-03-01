@@ -35,6 +35,7 @@ function UserContextProvider({children}) {
 
     // errors
     const [loginError, setLoginError] = useState('')
+    const [signupError, setSignupError] = useState('')
 
 // _______________________________________________________________
 
@@ -115,6 +116,7 @@ function UserContextProvider({children}) {
 
         } catch (error){
             console.log(error.message)
+            setSignupError("Invalid email or password")
             setSigninUp({username: "", email: "", password: "", currency: ""})
         }
     }
@@ -144,6 +146,10 @@ function UserContextProvider({children}) {
 
     function cleanLoginError(){
         setLoginError('')
+    }
+
+    function cleanSignupError(){
+        setSignupError('')
     }
 
     function handleDepositChecking(event){
@@ -350,7 +356,9 @@ function UserContextProvider({children}) {
         sendToChecking,
 
         loginError,
-        cleanLoginError
+        signupError,
+        cleanLoginError,
+        cleanSignupError
         
         }}>
             {children}
