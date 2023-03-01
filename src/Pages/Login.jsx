@@ -4,6 +4,8 @@ import { UserContext } from "../UserContext"
 
 function Login() {
   const {loggingIn, userLogged, handleLogin, logIn, loginError, cleanLoginError} = useContext(UserContext)
+  const [error, setError] = useState(false)
+
   let navigate = useNavigate()
 
   // making sure it doesn't load previous mistakes if i refresh the page or visit it again
@@ -11,7 +13,6 @@ function Login() {
     cleanLoginError()
   }, [])
 
-  const [error, setError] = useState(false)
 
   // ALSO A GOOD SOLUTION
   // function goToChecking(){
@@ -30,7 +31,7 @@ function Login() {
     }
   }, [userLogged])
 
-  // every time i click on login (function from usecontext) if i receive an error, it saves it in a state, so it triggers useEffect that shows the error Error
+  // every time i click on login (function from usecontext) if i receive an error, it saves it in a state, so it triggers useEffect that shows the error
   useEffect(() => {
     if (loginError !== ''){
       setError(true)

@@ -18,7 +18,7 @@ function UserContextProvider({children}) {
 
     // data collected on login
     const [loggingIn, setLoggingIn] = useState({email: "", password: ""})
-    const [ userLogged, setUserLogged] = useState({})
+    const [userLogged, setUserLogged] = useState({})
 
     // checking transactions
     const [depositChecking, setDepositChecking] = useState({amount: "", info: ""})
