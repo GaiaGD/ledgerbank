@@ -1,8 +1,5 @@
-import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { useState, useContext, useEffect } from "react"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
-import { auth } from "../utils/firebase-config"
 import { UserContext } from "../UserContext"
 import CheckingOrSaving from "../Components/CheckingOrSaving"
 import Loader from "../Components/Loader"
