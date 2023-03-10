@@ -2,7 +2,7 @@ function SendBetweenAccounts(props){
 
     return (
         <div className="flex justify-between my-4">
-            <div className="mr-2 rounded-[40px] border-solid border-white border-2 bg-black w-full flex">
+            <div className="rounded-[40px] border-solid border-white border-2 bg-black w-full flex">
                 <input className="w-full text-base bg-transparent p-2 pr-0 text-white outline-none text-right" placeholder="0" type="number" value={props.value} onChange={props.onChange} />
                 <div className="flex p-2">
                     <span className="my-auto">{props.currency}</span>

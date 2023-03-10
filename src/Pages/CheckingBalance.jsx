@@ -1,10 +1,11 @@
-import { useState, useContext } from "react"
+import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from "../UserContext"
 import { Link } from "react-router-dom"
 import InputAndInfo from "../Components/InputAndInfo"
 import CheckingOrSaving from "../Components/CheckingOrSaving"
 import SendBetweenAccounts from "../Components/SendBetweenAccounts"
+import { motion } from "framer-motion"
 
 function CheckingBalance() {
 
@@ -22,6 +23,22 @@ function CheckingBalance() {
         logOut,
         loginError
     } = useContext(UserContext)
+
+    const headerVariants = {
+        initial: { opacity: 0},
+        animate: { opacity: 1,
+        transition: { staggerChildren: 0.1, duration: 0.8 },
+        }
+    }
+
+    const checkingVariants = {
+        initial: { opacity: 0, translateX: 200 },
+        animate: { opacity: 1,
+        translateX: 0,
+        transition: { staggerChildren: 0.1, duration: 0.5 },
+        }
+    }
+
 
     let navigate = useNavigate()
     const backHome = () => {
@@ -53,82 +70,89 @@ function CheckingBalance() {
 
 
     return (
-        <>
+        <motion.div variants={headerVariants} initial="initial" animate="animate">
             <div className="flex items-center justify-center">
                 <div className="md:w-1/3 w-full">
-                    <Link to="/">
-                        <img className="object-contain mx-auto w-1/12 my-4" src="src/assets/ledger-logo.svg" />
-                    </Link>
-                    <h2 className="capitalize text-4xl text-center">Hello {userLoggedData.username}</h2>
+                    <motion.div variants={headerVariants}>
+                        <Link to="/">
+                            <img className="object-contain mx-auto w-1/12 my-4" src="src/assets/ledger-logo.svg" />
+                        </Link>
+                        <h2 className="capitalize text-4xl text-center">Hello {userLoggedData.username}</h2>
+                    </motion.div>
+                    <motion.div variants={headerVariants}>
+                        <CheckingOrSaving selected={"CHECKING"} />
+                    </motion.div>
 
-                    <CheckingOrSaving selected={"CHECKING"} />
-
-                    <div className="pt-4 pb-8">
-                        <h1 className="capitalize text-6xl text-center truncate">{userLoggedData.checkingBalance}{userLoggedData.currency}</h1>
-                    </div>
-
-                    <div className="relative h-8 border-t-2 border-white border-solid">
-                        <div className="absolute -top-[1.3em] inset-x-1/4 bg-white text-black p-2 rounded-full w-3/6 mx-auto">
-                            <h3 className="uppercase text-base text-center">TOTAL BALANCE</h3>
+                    <motion.div variants={checkingVariants}>
+                        <div className="pt-4 pb-8">
+                            <h1 className="capitalize text-6xl text-center truncate">{userLoggedData.checkingBalance}{userLoggedData.currency}</h1>
                         </div>
-                    </div>
+
+                        <div className="relative h-8 border-t-2 border-white border-solid">
+                            <div className="absolute -top-[1.3em] inset-x-1/4 bg-white text-black p-2 rounded-full w-3/6 mx-auto">
+                                <h3 className="uppercase text-base text-center">TOTAL BALANCE</h3>
+                            </div>
+                        </div>
+                    </motion.div>
 
                     <div className="flex justify-between my-4">
-
-                        <InputAndInfo
-                            currency={userLoggedData.currency}
-                            buttonCopy= "DEPOSIT"
-                            valueAmount={depositChecking.amount}
-                            valueInfo={depositChecking.info}
-                            onChange={handleDepositChecking}
-                            onClick={depositToChecking}
-                        />
-
-                        <InputAndInfo
-                            currency={userLoggedData.currency}
-                            buttonCopy= "WITHDRAW"
-                            valueAmount={withdrawChecking.amount}
-                            valueInfo={withdrawChecking.info}
-                            onChange={handleWithdrawChecking}
-                            onClick={withdrawFromChecking}
-                        />
-
+                        <motion.div variants={checkingVariants} className="w-3/6 mr-2">
+                                <InputAndInfo
+                                    currency={userLoggedData.currency}
+                                    buttonCopy= "DEPOSIT"
+                                    valueAmount={depositChecking.amount}
+                                    valueInfo={depositChecking.info}
+                                    onChange={handleDepositChecking}
+                                    onClick={depositToChecking}
+                                />
+                        </motion.div>
+                        <motion.div variants={checkingVariants} className="w-3/6">
+                                <InputAndInfo
+                                    currency={userLoggedData.currency}
+                                    buttonCopy= "WITHDRAW"
+                                    valueAmount={withdrawChecking.amount}
+                                    valueInfo={withdrawChecking.info}
+                                    onChange={handleWithdrawChecking}
+                                    onClick={withdrawFromChecking}
+                                />
+                        </motion.div>
                     </div>
 
-                    <SendBetweenAccounts
-                        value={sendingToSaving}
-                        onChange={handleSendToSaving}
-                        currency={userLoggedData.currency}
-                        onClick={sendToSaving}
-                        buttonCopy= "To saving"
-                    />
-
-
+                    <motion.div variants={checkingVariants}>
+                        <SendBetweenAccounts
+                            value={sendingToSaving}
+                            onChange={handleSendToSaving}
+                            currency={userLoggedData.currency}
+                            onClick={sendToSaving}
+                            buttonCopy= "To saving"
+                        />
+                    </motion.div>
 
                     {checkingTransactionsHistory.length > 0 &&
-
-                    <>
-                        <div className="relative border-t-2 border-white border-solid mt-16">
-                            <div className="absolute -top-[1.3em] inset-x-[15%] bg-white text-black p-2 rounded-full w-[70%] mx-auto">
-                                <h3 className="uppercase text-base text-center">TRANSACTION HISTORY</h3>
-                            </div>
-                        </div>
-                        <div className="max-h-96 overflow-auto mb-4 border-b-2 border-white border-solid">
-                            <div className="flex justify-between">
-                                <div className="w-full mr-4">
-                                    {checkingTransactionsHistory}
+                        <motion.div variants={checkingVariants}>
+                            <div className="relative border-t-2 border-white border-solid mt-16">
+                                <div className="absolute -top-[1.3em] inset-x-[15%] bg-white text-black p-2 rounded-full w-[70%] mx-auto">
+                                    <h3 className="uppercase text-base text-center">TRANSACTION HISTORY</h3>
                                 </div>
                             </div>
-                        </div>
-                    </>
-
+                            <div className="max-h-96 overflow-auto mb-4 border-b-2 border-white border-solid">
+                                <div className="flex justify-between">
+                                    <div className="w-full mr-4">
+                                        {checkingTransactionsHistory}
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
                     }
-                    <div className="my-8">
-                        <h2 className="underline underline-offset-4 text-center" onClick={backHome}>Log out</h2>
-                    </div>
+                    <motion.div variants={checkingVariants}>
+                        <div className="my-8">
+                            <h2 className="underline underline-offset-4 text-center" onClick={backHome}>Log out</h2>
+                        </div>
+                    </motion.div>
+
                 </div>
             </div>
-        </>)
+        </motion.div>)
 }
 
 export default CheckingBalance

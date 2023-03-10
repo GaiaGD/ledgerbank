@@ -117,7 +117,9 @@ function UserContextProvider({children}) {
         } catch (error){
             console.log(error.message)
             setSignupError("Invalid email or password")
-            setSigninUp({username: "", email: "", password: "", currency: ""})
+            
+            // COMMENTED DOWN BECAUSE: for now, if "Invalid email or password", the form doesn't reset
+            // setSigninUp({username: "", email: "", password: "", currency: ""})
         }
     }
 
@@ -139,8 +141,9 @@ function UserContextProvider({children}) {
         } catch (error){
             // console.log(error.message)
             setLoginError("Invalid email or password")
-            // alert(error.message)
-            setLoggingIn({email: "", password: ""})
+            
+            // COMMENTED DOWN BECAUSE: for now, if "Invalid email or password", the form doesn't reset
+            // setLoggingIn({email: "", password: ""})
         }
     }
 

@@ -96,7 +96,7 @@ function Signup() {
 
           { error && <p className="text-red-900 text-sm text-center">{signupError}</p>}
 
-          <motion.div variants={signupVariants} className=" block mt-4 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={signUp} >
+          <motion.div variants={signupVariants} className="block mt-4 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" onClick={signUp} >
               <h3 className="text-center uppercase font-bold text-base">Create Account</h3>
           </motion.div>
 
