@@ -52,7 +52,7 @@ function Login() {
 
         <div className="md:w-1/3 w-full">
           <motion.div variants={loginVariants}>
-            <Link to="/">
+            <Link to="/ledgerbank/">
               <img className="object-contain mx-auto w-1/12 m-16" src="src/assets/ledger-logo.svg" />
             </Link>
           </motion.div>
@@ -73,7 +73,7 @@ function Login() {
           </motion.div>
 
           <motion.div variants={loginVariants} className="my-8">
-            <Link to="/signup">
+            <Link to="/ledgerbank/signup">
                 <h2 className="underline underline-offset-4 text-center">Sign in</h2>
             </Link>
           </motion.div>
