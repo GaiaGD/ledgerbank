@@ -34,7 +34,7 @@ function Signup() {
   useEffect(() => {
     if (userLogged !== null){
       cleanSignupError()
-      return navigate('/ledgerbank/checkingBalance')
+      return navigate('/checkingBalance')
     }
   }, [userLogged])
 
