@@ -30,15 +30,17 @@ function Signup() {
     cleanSignupError()
   }, [])
 
-  // every time i click on signup (function from usecontext) the content of userLogged changes so it triggers useEffect, and allows the user to go to checkingbalance that is a private route, only accessible if userLogged is populated
+  // every time i click on signup (function from usecontext) the content of userLogged changes so it triggers useEffect,
+  //and allows the user to go to checkingbalance that is a private route, only accessible if userLogged is populated
   useEffect(() => {
     if (userLogged !== null){
       cleanSignupError()
-      return navigate('/checkingBalance')
+      return navigate('/ledgerbank/checkingBalance')
     }
   }, [userLogged])
 
-  // every time i click on signup (function from usecontext) if i receive an error, it saves it in a state, so it triggers useEffect that shows the error 
+  // every time i click on signup (function from usecontext) if i receive an error, it saves it in a state,
+  // so it triggers useEffect that shows the error 
   useEffect(() => {
     if (signupError !== ''){
       setError(true)
