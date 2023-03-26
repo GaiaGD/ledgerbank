@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom"
 import { useState, useEffect, useContext } from "react"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
-import { auth } from "./utils/firebase-config"
-import { getAuth } from "firebase/auth";
+// import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
+// import { auth } from "./utils/firebase-config"
+// import { getAuth } from "firebase/auth";
 
 import { UserContext } from "./UserContext"
 import Intro from "./Pages/Intro"
@@ -23,7 +23,7 @@ function App() {
     <div className="App p-4">
 
       <Routes>
-          <Route exact path="/ledgerbank/" element={<Intro />} />
+          <Route path="/ledgerbank/" element={<Intro />} />
           <Route exact path="/ledgerbank/signup" element={<Signup />} />          
           <Route exact path="/ledgerbank/login" element={<Login />} />
           
