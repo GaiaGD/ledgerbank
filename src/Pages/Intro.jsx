@@ -36,6 +36,7 @@ function Intro() {
                     <motion.div variants={introVariants} className="text-center">
                       <h2 className="capitalize text-4xl">Hello {userLoggedData.username}</h2>
                       <h3 className="mt-16 mb-4 mx-[25%]">What account would you like to view?</h3>
+                      <h3 className="mt-16 mb-4 mx-[25%]">What account would you like to view?</h3>
                     </motion.div>
 
                     <motion.div variants={introVariants}>
