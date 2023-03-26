@@ -24,12 +24,12 @@ function CheckingBalance() {
         loginError
     } = useContext(UserContext)
 
-    const headerVariants = {
-        initial: { opacity: 0},
-        animate: { opacity: 1,
-        transition: { staggerChildren: 0.1, duration: 0.8 },
-        }
-    }
+    // const headerVariants = {
+    //     initial: { opacity: 0},
+    //     animate: { opacity: 1,
+    //     transition: { staggerChildren: 0.1, duration: 0.1 },
+    //     }
+    // }
 
     const checkingVariants = {
         initial: { opacity: 0, translateX: 200 },
@@ -70,18 +70,22 @@ function CheckingBalance() {
 
 
     return (
-        <motion.div variants={headerVariants} initial="initial" animate="animate">
+        <motion.div initial="initial" animate="animate">
             <div className="flex items-center justify-center">
                 <div className="md:w-1/3 w-full">
-                    <motion.div variants={headerVariants}>
+                    {/* <motion.div variants={headerVariants}> */}
+                    <div>
                         <Link to="/">
                             <img className="object-contain mx-auto w-1/12 my-4" src="src/assets/ledger-logo.svg" />
                         </Link>
                         <h2 className="capitalize text-4xl text-center">Hello {userLoggedData.username}</h2>
-                    </motion.div>
-                    <motion.div variants={headerVariants}>
+                    {/* </motion.div> */}
+                    </div>
+                    {/* <motion.div variants={headerVariants}> */}
+                    <div>
                         <CheckingOrSaving selected={"CHECKING"} />
-                    </motion.div>
+                    </div>
+                    {/* </motion.div> */}
 
                     <motion.div variants={checkingVariants}>
                         <div className="pt-4 pb-8">

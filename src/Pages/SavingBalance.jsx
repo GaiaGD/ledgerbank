@@ -26,7 +26,7 @@ function SavingBalance() {
     const headerVariants = {
         initial: { opacity: 0},
         animate: { opacity: 1,
-        transition: { staggerChildren: 0.1, duration: 0.8 },
+        transition: { staggerChildren: 0.1, duration: 0.1 },
         }
     }
 
@@ -34,7 +34,7 @@ function SavingBalance() {
         initial: { opacity: 0, translateX: 200 },
         animate: { opacity: 1,
         translateX: 0,
-        transition: { staggerChildren: 0.1, duration: 0.8 },
+        transition: { staggerChildren: 0.1, duration: 0.5 },
         }
     }
 
@@ -69,18 +69,18 @@ function SavingBalance() {
 
 
     return (
-        <motion.div variants={headerVariants} initial="initial" animate="animate">
+        <motion.div initial="initial" animate="animate">
                 <div className="flex items-center justify-center">
                     <div className="md:w-1/3 w-full">
-                        <motion.div variants={headerVariants}>
+                        <div>
                             <Link to="/">
                                 <img className="object-contain mx-auto w-1/12 my-4" src="src/assets/ledger-logo.svg" />
                             </Link>
                             <h2 className="capitalize text-4xl text-center">Hello {userLoggedData.username}</h2>
-                        </motion.div>
-                        <motion.div variants={headerVariants}>
+                        </div>
+                        <div>
                             <CheckingOrSaving selected={"SAVING"} />
-                        </motion.div>
+                        </div>
 
                         <motion.div variants={savingVariants}>
                             <div className="pt-4 pb-8">
