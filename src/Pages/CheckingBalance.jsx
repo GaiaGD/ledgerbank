@@ -43,7 +43,7 @@ function CheckingBalance() {
     let navigate = useNavigate()
     const backHome = () => {
         logOut()
-        navigate("/")
+        navigate("/ledgerbank/")
     }
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
@@ -75,7 +75,7 @@ function CheckingBalance() {
                 <div className="md:w-1/3 w-full">
                     <div>
                         <Link to="/ledgerbank/">
-                            <img className="object-contain mx-auto w-1/12 my-4" src="src/assets/ledger-logo.svg" />
+                            <img className="object-contain mx-auto w-1/12 my-4" src="./ledger-logo.svg" />
                         </Link>
                         <h2 className="capitalize text-4xl text-center">Hello {userLoggedData.username}</h2>
                     </div>

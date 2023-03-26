@@ -64,7 +64,7 @@ function Signup() {
         <div className="md:w-1/3 w-full">
           <motion.div variants={signupVariants}>
             <Link to="/ledgerbank/">
-              <img className="object-contain mx-auto w-1/12 m-16" src="src/assets/ledger-logo.svg" />
+              <img className="object-contain mx-auto w-1/12 m-16" src="./ledger-logo.svg" />
             </Link>
           </motion.div>
 

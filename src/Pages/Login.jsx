@@ -36,7 +36,7 @@ function Login() {
   useEffect(() => {
     if (userLogged !== null){
       cleanLoginError()
-      return navigate('/checkingBalance')
+      return navigate('/ledgerbank/checkingBalance')
     }
   }, [userLogged])
 
@@ -53,7 +53,7 @@ function Login() {
         <div className="md:w-1/3 w-full">
           <motion.div variants={loginVariants}>
             <Link to="/ledgerbank/">
-              <img className="object-contain mx-auto w-1/12 m-16" src="src/assets/ledger-logo.svg" />
+              <img className="object-contain mx-auto w-1/12 m-16" src="./ledger-logo.svg" />
             </Link>
           </motion.div>
 

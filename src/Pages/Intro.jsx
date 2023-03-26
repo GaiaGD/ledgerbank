@@ -30,7 +30,7 @@ function Intro() {
                   <motion.div variants={introVariants} initial="initial" animate="animate">
                     
                     <motion.div variants={introVariants} className="">
-                      <img className="object-contain mx-auto w-2/3 m-16" src="src/assets/ledger-logotype.svg" />
+                      <img className="object-contain mx-auto w-2/3 m-16" src="./ledger-logotype.svg" />
                     </motion.div>
 
                     <motion.div variants={introVariants} className="text-center">

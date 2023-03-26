@@ -22,7 +22,7 @@ function Loader (){
         { loading &&
             <div className="relative" id="fadeIt">
                 <div className="absolute h-screen bg-black flex items-center">
-                    <img className="mx-auto w-1/6 m-16 animate-pulse" src="src/assets/ledger-logo.svg" />
+                    <img className="mx-auto w-1/6 m-16 animate-pulse" src="./ledger-logo.svg" />
                 </div>
             </div>
         }

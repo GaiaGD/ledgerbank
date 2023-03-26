@@ -23,13 +23,6 @@ function SavingBalance() {
         logOut
     } = useContext(UserContext)
 
-    const headerVariants = {
-        initial: { opacity: 0},
-        animate: { opacity: 1,
-        transition: { staggerChildren: 0.1, duration: 0.1 },
-        }
-    }
-
     const savingVariants = {
         initial: { opacity: 0, translateX: 200 },
         animate: { opacity: 1,
@@ -41,7 +34,7 @@ function SavingBalance() {
     let navigate = useNavigate()
     const backHome = () => {
         logOut()
-        navigate("/")
+        navigate("/ledgerbank/")
     }
 
     // filter checking transactions only (and reverse the order chronologically)
