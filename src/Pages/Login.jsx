@@ -50,7 +50,6 @@ function Login() {
   return (
     <motion.div variants={loginVariants} initial="initial" animate="animate" className="flex items-center justify-center h-screen">
 
-      <div className="flex items-center justify-center h-screen">
         <div className="md:w-1/3 w-full">
           <motion.div variants={loginVariants}>
             <Link to="/">
@@ -80,8 +79,6 @@ function Login() {
           </motion.div>
 
         </div>
-      </div>
-
 
     </motion.div>
   )

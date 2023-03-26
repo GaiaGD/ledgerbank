@@ -23,17 +23,13 @@ function CheckingOrSaving(props){
     return (
         <div className="my-4 w-full gradient-cta p-2 rounded-full bg-origin-border solid border-2 border-transparent flex justify-between">
 
-            <div className="p-2 rounded-full w-3/6" style={selectedAccount == 'CHECKING' ? selectedStyle : notSelectedStyle } onClick={selectThisAccount} >
-                <Link to="/checkingBalance" >
+                <Link to="/checkingBalance" className="p-2 rounded-full w-3/6" style={selectedAccount == 'CHECKING' ? selectedStyle : notSelectedStyle } onClick={selectThisAccount} >
                     <h3 className="uppercase text-base text-center">CHECKING</h3>
                 </Link>
-            </div>
 
-            <div className="p-2 rounded-full w-3/6" style={selectedAccount == 'SAVING' ? selectedStyle : notSelectedStyle } onClick={selectThisAccount} >
-                <Link to="/savingBalance" >
+                <Link to="/savingBalance" className="p-2 rounded-full w-3/6" style={selectedAccount == 'SAVING' ? selectedStyle : notSelectedStyle } onClick={selectThisAccount} >
                     <h3 className="uppercase text-base text-center">SAVING</h3>
                 </Link>
-            </div>
         </div>
     )
 }
