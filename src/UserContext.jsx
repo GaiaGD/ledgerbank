@@ -107,7 +107,7 @@ function UserContextProvider({children}) {
             const user = await createUserWithEmailAndPassword(auth, signinUp.email, signinUp.password)
             // storing the user info when signing up
             let fieldsData = {username: signinUp.username, email: signinUp.email, password: signinUp.password, currency: currency, savingBalance: 100, checkingBalance: 100}
-
+            console.log(fieldsData)
             // MORE DATA TO BE ADDED FOR THEMES & BALANCES
             await setDoc(doc(db, "users", user.user.uid), fieldsData)
                         
