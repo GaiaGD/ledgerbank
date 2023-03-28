@@ -24,15 +24,15 @@ function App() {
 
       <Routes>
           <Route path="/" element={<Intro />} />
-          <Route exact path="/signup" element={<Signup />} />          
-          <Route exact path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />          
+          <Route path="/login" element={<Login />} />
           
           <Route element={<PrivateRoute userLogged={userLogged} />}>
-            <Route exact path="/checkingBalance" element={<CheckingBalance />} />
+            <Route path="/checkingBalance" element={<CheckingBalance />} />
           </Route>
           
           <Route element={<PrivateRoute userLogged={userLogged} />}>
-            <Route exact path="/savingBalance" element={<SavingBalance />} />
+            <Route path="/savingBalance" element={<SavingBalance />} />
           </Route>
           
       </Routes>
