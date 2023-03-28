@@ -23,16 +23,16 @@ function App() {
     <div className="App p-4">
 
       <Routes>
-          <Route path="/ledgerbank/" element={<Intro />} />
-          <Route exact path="/ledgerbank/signup" element={<Signup />} />          
-          <Route exact path="/ledgerbank/login" element={<Login />} />
+          <Route path="/" element={<Intro />} />
+          <Route exact path="/signup" element={<Signup />} />          
+          <Route exact path="/login" element={<Login />} />
           
           <Route element={<PrivateRoute userLogged={userLogged} />}>
-            <Route exact path="/ledgerbank/checkingBalance" element={<CheckingBalance />} />
+            <Route exact path="/checkingBalance" element={<CheckingBalance />} />
           </Route>
           
           <Route element={<PrivateRoute userLogged={userLogged} />}>
-            <Route exact path="/ledgerbank/savingBalance" element={<SavingBalance />} />
+            <Route exact path="/savingBalance" element={<SavingBalance />} />
           </Route>
           
       </Routes>

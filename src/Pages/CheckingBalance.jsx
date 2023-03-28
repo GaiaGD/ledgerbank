@@ -74,7 +74,7 @@ function CheckingBalance() {
             <div className="flex items-center justify-center">
                 <div className="md:w-1/3 w-full">
                     <div>
-                        <Link to="/ledgerbank/">
+                        <Link to="/">
                             <img className="object-contain mx-auto w-1/12 my-4" src="./ledger-logo.svg" />
                         </Link>
                         <h2 className="capitalize text-4xl text-center">Hello {userLoggedData.username}</h2>

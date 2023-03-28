@@ -35,7 +35,7 @@ function Signup() {
   useEffect(() => {
     if (userLogged !== null){
       cleanSignupError()
-      return navigate('/ledgerbank/checkingBalance')
+      return navigate('/checkingBalance')
     }
   }, [userLogged])
 
@@ -65,7 +65,7 @@ function Signup() {
 
         <div className="md:w-1/3 w-full">
           <motion.div variants={signupVariants}>
-            <Link to="/ledgerbank/">
+            <Link to="/">
               <img className="object-contain mx-auto w-1/12 m-16" src="./ledger-logo.svg" />
             </Link>
           </motion.div>

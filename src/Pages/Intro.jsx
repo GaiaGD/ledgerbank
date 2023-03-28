@@ -56,7 +56,7 @@ function Intro() {
                     </motion.div>
 
                     <motion.div  variants={introVariants}>
-                      <Link to="/ledgerbank/signup">
+                      <Link to="/signup">
                         <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" >
                           <h3 className="uppercase font-bold text-base">Create Account</h3>
                         </button>
@@ -64,7 +64,7 @@ function Intro() {
                     </motion.div>
 
                     <motion.div  variants={introVariants}>
-                      <Link to="/ledgerbank/login">
+                      <Link to="/login">
                         <button className="my-2 w-full gradient-cta p-4 rounded-full bg-origin-border solid border-2 border-transparent" >
                           <h3 className="uppercase font-bold text-base">Login</h3>
                         </button>
