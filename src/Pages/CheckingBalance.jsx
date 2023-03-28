@@ -43,7 +43,7 @@ function CheckingBalance() {
     let navigate = useNavigate()
     const backHome = () => {
         logOut()
-        navigate("/ledgerbank/")
+        navigate("/")
     }
     // filter checking transactions only (and reverse the order chronologically)
     const dataAsArray = Object.entries(userLoggedData)
