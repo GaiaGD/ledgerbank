@@ -37,7 +37,7 @@ function Login() {
   useEffect(() => {
     if (userLogged !== null){
       cleanLoginError()
-      return navigate('/ledgerbank/checkingBalance')
+      return navigate('/checkingBalance')
     }
   }, [userLogged])
 
