@@ -16,7 +16,7 @@ import SavingBalance from "./Pages/SavingBalance"
 
 function App() {
 
-  const {userLogged, logOut} = useContext(UserContext)
+  const {userLogged} = useContext(UserContext)
 
   return (
 

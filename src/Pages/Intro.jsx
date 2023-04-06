@@ -19,7 +19,7 @@ function Intro() {
     return (
 
         <div>
-            {/* <Loader /> */}
+            <Loader />
 
             <div className="flex items-center justify-center h-screen">
               <div className="md:w-1/3 w-full">           

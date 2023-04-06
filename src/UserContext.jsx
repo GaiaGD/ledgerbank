@@ -37,7 +37,15 @@ function UserContextProvider({children}) {
     const [loginError, setLoginError] = useState('')
     const [signupError, setSignupError] = useState('')
 
+    // test
+    const [firstLoad, setFirstLoad] = useState(true)
+
 // _______________________________________________________________
+
+
+function onlyLoadOnce(){
+    setFirstLoad(false)
+}
 
 
 // timestamps for transactions:
@@ -385,7 +393,10 @@ function UserContextProvider({children}) {
         loginError,
         signupError,
         cleanLoginError,
-        cleanSignupError
+        cleanSignupError,
+
+        firstLoad,
+        onlyLoadOnce
         
         }}>
             {children}
