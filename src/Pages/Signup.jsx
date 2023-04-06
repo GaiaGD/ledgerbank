@@ -102,6 +102,12 @@ function Signup() {
               <h3 className="text-center uppercase font-bold text-base">Create Account</h3>
           </motion.div>
 
+          <motion.div variants={signupVariants} className="my-8">
+            <Link to="/login">
+                <h2 className="underline underline-offset-4 text-center">Log in</h2>
+            </Link>
+          </motion.div>
+
         </div>
 
       </motion.div>

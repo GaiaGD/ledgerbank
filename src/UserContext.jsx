@@ -103,21 +103,44 @@ function UserContextProvider({children}) {
     }
 
     const signUp = async () => {
-        try {
-            const user = await createUserWithEmailAndPassword(auth, signinUp.email, signinUp.password)
-            // storing the user info when signing up
-            let fieldsData = {username: signinUp.username, email: signinUp.email, password: signinUp.password, currency: currency, savingBalance: 100, checkingBalance: 100}
-            console.log(fieldsData)
-            // MORE DATA TO BE ADDED FOR THEMES & BALANCES
-            await setDoc(doc(db, "users", user.user.uid), fieldsData)
-                        
-            // this data will be shared around all the pages and can be edited and resubmitted to db
-            setUserLoggedData(fieldsData)
+        console.log(signinUp.username)
+        console.log(currency)
+        
+            try {
+                    // BLOCK TRY IF USERNAME AND CURRENCY ARE MISSING
+                    if(signinUp.username !== "" && currency !== "none"){
+                        const user = await createUserWithEmailAndPassword(auth, signinUp.email, signinUp.password)
+                        // storing the user info when signing up
+                        let fieldsData = {username: signinUp.username, email: signinUp.email, password: signinUp.password, currency: currency, savingBalance: 100, checkingBalance: 100}
+                        console.log(fieldsData)
+                        // MORE DATA TO BE ADDED FOR THEMES & BALANCES
+                        await setDoc(doc(db, "users", user.user.uid), fieldsData)
+                                    
+                        // this data will be shared around all the pages and can be edited and resubmitted to db
+                        setUserLoggedData(fieldsData)
+                    }
+                    else if (signinUp.username === "" && currency === "none") {
+                        setSignupError("Please fill in all the fields")
+                    }
+                    else if (currency === "none") {
+                        setSignupError("Please select your currency")
+                    }
+                    else if (signinUp.username === "") {
+                        setSignupError("Please enter a username")
+                    }
+            } 
 
-        } catch (error){
+        catch (error){
             console.log(error.message)
-            setSignupError("Invalid email or password")
-            
+            if(error.message === "Firebase: Error (auth/email-already-in-use)."){
+                setSignupError("Email already in use")
+            } else if (error.message === "Firebase: Error (auth/invalid-email)."){
+                setSignupError("You've entered an invalid email address")
+            } else if (error.message === "Firebase: Password should be at least 6 characters (auth/weak-password)."){
+                setSignupError('Password should be at least 6 characters')
+            } else {
+                setSignupError(error.message)
+            }
             // COMMENTED DOWN BECAUSE: for now, if "Invalid email or password", the form doesn't reset
             // setSigninUp({username: "", email: "", password: "", currency: ""})
         }
@@ -139,7 +162,7 @@ function UserContextProvider({children}) {
             setLoginError('')
 
         } catch (error){
-            // console.log(error.message)
+            console.log(error.message)
             setLoginError("Invalid email or password")
             
             // COMMENTED DOWN BECAUSE: for now, if "Invalid email or password", the form doesn't reset
@@ -320,6 +343,7 @@ function UserContextProvider({children}) {
         await signOut(auth)
         setSigninUp({username: "", email: "", password: "", currency: ""})
         setLoggingIn({email: "", password: ""})
+        setCurrency("none")
     }
 
 
