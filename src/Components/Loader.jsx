@@ -5,10 +5,10 @@ function Loader (){
     const {firstLoad, onlyLoadOnce} = useContext(UserContext)
 
     useEffect(() => {
-        console.log("load")
+        // this only loads once opened in the tab. not even if refreshing
         setTimeout(() => {
             onlyLoadOnce()
-        }, "3000")
+        }, "30000")
     }, [])
 
     console.log(firstLoad)

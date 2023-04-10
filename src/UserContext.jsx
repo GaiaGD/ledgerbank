@@ -42,11 +42,9 @@ function UserContextProvider({children}) {
 
 // _______________________________________________________________
 
-
 function onlyLoadOnce(){
     setFirstLoad(false)
 }
-
 
 // timestamps for transactions:
 
