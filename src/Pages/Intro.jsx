@@ -19,6 +19,7 @@ function Intro() {
     return (
 
         <div>
+             {/* this only loads once opened in the tab. not even if refreshing */}
             <Loader />
 
             <div className="flex items-center justify-center h-screen">
