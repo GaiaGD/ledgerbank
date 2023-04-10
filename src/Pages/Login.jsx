@@ -50,7 +50,7 @@ function Login() {
   }, [loginError])
 
   return (
-    <motion.div variants={loginVariants} initial="initial" animate="animate" className="flex items-center justify-center h-screen">
+    <motion.div variants={loginVariants} initial="initial" animate="animate" className="flex items-center justify-center h-screen p-4">
 
         <div className="md:w-1/3 w-full">
           <motion.div variants={loginVariants}>

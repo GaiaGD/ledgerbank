@@ -42,3 +42,54 @@ input::-webkit-inner-spin-button {
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
 }
+
+.loader {
+  background: linear-gradient(145deg, #000000, #00d0ff43, #000000, #ae00ff4d, #000000);
+  background-size: 1000% 1000%;
+
+  -webkit-animation: loader 20s ease infinite;
+  animation: loader 20s ease infinite;
+}
+
+@-webkit-keyframes loader {
+  0% { background-position: 50% 0% }
+  50% { background-position: 50% 100% }
+  100% { background-position: 50% 0% }
+}
+@keyframes loader {
+  0% { background-position: 50% 0% }
+  50% { background-position: 50% 100% }
+  100% { background-position: 50% 0% }
+}
+
+.star {
+  margin: 20px;
+  padding:100px;
+  width: 200px;
+  height:200px;
+  animation: pulsating 5s ease-in-out infinite alternate;
+
+   -webkit-animation: pulsating 2s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes pulsating {
+  from   { 
+          background: -webkit-radial-gradient(ellipse at bottom left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%);
+          opacity:1;
+      }
+  to {     
+          background: -webkit-radial-gradient(ellipse at bottom left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+          opacity:0.5;
+      }
+}
+
+@keyframes pulsating {
+  from   {     
+          background: radial-gradient(ellipse at bottom left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%);
+          opacity:1;                
+      }
+  to {  
+          background: radial-gradient(ellipse at bottom left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+          opacity:0.5;
+      }
+}

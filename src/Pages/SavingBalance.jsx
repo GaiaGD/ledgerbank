@@ -63,7 +63,7 @@ function SavingBalance() {
 
     return (
         <motion.div initial="initial" animate="animate">
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center p-4">
                     <div className="md:w-1/3 w-full">
                         <div>
                             <Link to="/">

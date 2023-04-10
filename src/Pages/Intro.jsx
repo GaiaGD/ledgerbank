@@ -22,7 +22,7 @@ function Intro() {
              {/* this only loads once opened in the tab. not even if refreshing */}
             <Loader />
 
-            <div className="flex items-center justify-center h-screen">
+            <div className="flex items-center justify-center h-screen p-4">
               <div className="md:w-1/3 w-full">           
 
               {userLogged

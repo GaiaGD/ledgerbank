@@ -16,8 +16,18 @@ function Loader (){
     return (
         <>
             { firstLoad &&
-                <div className="h-screen bg-black flex items-center">
-                    <img className="mx-auto w-1/6 m-16 animate-pulse" src="./ledger-logo.svg" />
+                <div className="absolute z-20">
+                    <div className="w-screen h-screen bg-black">
+                        <div className='h-1/6'>
+                        </div>
+                        <div className='h-2/6 flex'>
+                            <img className="mx-auto w-1/6 animate-pulse" src="./ledger-logo.svg" />
+                        </div>
+                        <div className='h-3/6 flex'>
+                            <div className='star w-3/6'></div>
+                            <div className='loader w-3/6'></div>
+                        </div>
+                    </div>
                 </div>
             }
         </>
