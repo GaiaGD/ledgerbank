@@ -6,21 +6,32 @@ import Loader from "../Components/Loader"
 import { motion } from "framer-motion"
 
 function Intro() {
-  const {userLogged, userLoggedData, logOut} = useContext(UserContext)
+  const {userLogged, userLoggedData, logOut, firstLoad} = useContext(UserContext)
 
-  const introVariants = {
-    initial: { opacity: 0, translateX: 200 },
-    animate: { opacity: 1,
-      translateX: 0,
-      transition: { staggerChildren: 0.1, duration: 0.8 },
+
+    const introVariants =
+      firstLoad ?
+    {
+      initial: { opacity: 0, translateX: 200 },
+      animate: { opacity: 1,
+        translateX: 0,
+        transition: { staggerChildren: 0.1, duration: 0.8, delay: 2.8 }
+        // delayed animation so it doesn't overlap the loader
+      }
     }
-  }
+    :
+    {
+      initial: { opacity: 0, translateX: 200 },
+      animate: { opacity: 1,
+        translateX: 0,
+        transition: { staggerChildren: 0.1, duration: 0.8 }
+      }
+    } 
 
     return (
 
         <div>
-             {/* this only loads once opened in the tab. not even if refreshing */}
-            <Loader />
+          <Loader />
 
             <div className="flex items-center justify-center h-screen p-4">
               <div className="md:w-1/3 w-full">           

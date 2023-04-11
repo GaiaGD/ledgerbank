@@ -62,34 +62,56 @@ input::-webkit-inner-spin-button {
   100% { background-position: 50% 0% }
 }
 
-.star {
-  margin: 20px;
-  padding:100px;
-  width: 200px;
-  height:200px;
-  animation: pulsating 5s ease-in-out infinite alternate;
-
-   -webkit-animation: pulsating 2s ease-in-out infinite alternate;
+.loaderBlue {
+  animation: pulsatingBlue 6s ease-in-out infinite alternate;
+   -webkit-animation: pulsatingBlue 6s ease-in-out infinite alternate;
 }
 
-@-webkit-keyframes pulsating {
-  from   { 
-          background: -webkit-radial-gradient(ellipse at bottom left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%);
+@-webkit-keyframes pulsatingBlue {
+  0%   { 
+          background: -webkit-radial-gradient(ellipse at bottom left, #00D1FF 0%, rgba(255,255,255,0) 70%);
           opacity:1;
       }
-  to {     
-          background: -webkit-radial-gradient(ellipse at bottom left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
-          opacity:0.5;
+  100%   { 
+          background: -webkit-radial-gradient(ellipse at bottom left, #00D1FF 0%, rgba(255,255,255,0) 70%);
+          opacity:0;
       }
 }
 
-@keyframes pulsating {
-  from   {     
-          background: radial-gradient(ellipse at bottom left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%);
+@keyframes pulsatingBlue {
+  0%   {     
+          background: radial-gradient(ellipse at bottom left, #00D1FF 0%, rgba(255,255,255,0) 70%);
           opacity:1;                
       }
-  to {  
-          background: radial-gradient(ellipse at bottom left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
-          opacity:0.5;
+  100%   {     
+          background: radial-gradient(ellipse at bottom left, #00D1FF 0%, rgba(255,255,255,0) 70%);
+          opacity:0;                
+      }
+}
+
+.loaderPurple {
+  animation: pulsatingPurple 2s ease-in-out infinite alternate;
+   -webkit-animation: pulsatingPurple 2s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes pulsatingPurple {
+  0%   { 
+          background: -webkit-radial-gradient(ellipse at bottom right, #AD00FF 0%, rgba(255,255,255,0) 65%);
+          opacity:1;
+      }
+  100%   { 
+          background: -webkit-radial-gradient(ellipse at bottom right, #AD00FF 0%, rgba(255,255,255,0) 65%);
+          opacity:0;
+      }
+}
+
+@keyframes pulsatingPurple {
+  0%   {     
+          background: radial-gradient(ellipse at bottom right, #AD00FF 0%, rgba(255,255,255,0) 65%);
+          opacity:1;                
+      }
+  100%   {     
+          background: radial-gradient(ellipse at bottom right, #AD00FF 0%, rgba(255,255,255,0) 65%);
+          opacity:0;                
       }
 }
