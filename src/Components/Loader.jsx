@@ -17,10 +17,9 @@ function Loader (){
         <>
             <AnimatePresence>
                 { firstLoad &&
-                    <motion.div key="modal" initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
+                    <motion.div key="modal" initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} className='relative'>
 
-                        <div className="absolute z-20">
-                            <div className="w-screen h-screen bg-black">
+                        <div className="absolute z-20 w-screen h-screen bg-black">
                                 <div className='h-1/6'>
                                 </div>
                                 <div className='h-1/6 flex'>
@@ -30,10 +29,10 @@ function Loader (){
                                     <div className='absolute inset-x-0 top-1/3 z-30'>
                                         <h2 className='text-center text-xl font-light'>Welcome</h2>
                                     </div>
-                                    <div className='loaderBlue absolute bottom-0 left-0 h-5/6 w-full'></div>
+                                    <div className='loaderBlue absolute bottom-0 left-0 h-5/6 w-full'>
+                                    </div>
                                     <div className='loaderPurple absolute bottom-0 right-0 h-full w-full'></div>
                                 </div>
-                            </div>
                         </div>
                     </motion.div>
                 }

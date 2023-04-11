@@ -43,28 +43,9 @@ input::-webkit-inner-spin-button {
   animation-name: fadeOut;
 }
 
-.loader {
-  background: linear-gradient(145deg, #000000, #00d0ff43, #000000, #ae00ff4d, #000000);
-  background-size: 1000% 1000%;
-
-  -webkit-animation: loader 20s ease infinite;
-  animation: loader 20s ease infinite;
-}
-
-@-webkit-keyframes loader {
-  0% { background-position: 50% 0% }
-  50% { background-position: 50% 100% }
-  100% { background-position: 50% 0% }
-}
-@keyframes loader {
-  0% { background-position: 50% 0% }
-  50% { background-position: 50% 100% }
-  100% { background-position: 50% 0% }
-}
-
 .loaderBlue {
+  -webkit-animation: pulsatingBlue 6s ease-in-out infinite alternate;
   animation: pulsatingBlue 6s ease-in-out infinite alternate;
-   -webkit-animation: pulsatingBlue 6s ease-in-out infinite alternate;
 }
 
 @-webkit-keyframes pulsatingBlue {
@@ -90,8 +71,8 @@ input::-webkit-inner-spin-button {
 }
 
 .loaderPurple {
+  -webkit-animation: pulsatingPurple 2s ease-in-out infinite alternate;
   animation: pulsatingPurple 2s ease-in-out infinite alternate;
-   -webkit-animation: pulsatingPurple 2s ease-in-out infinite alternate;
 }
 
 @-webkit-keyframes pulsatingPurple {
