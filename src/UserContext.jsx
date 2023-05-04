@@ -52,7 +52,11 @@ function onlyLoadOnce(){
     let date = dateRaw.toString()
     let timestamp = date.replace(/-/g, ' ')
 
+
     // this checks that everytime the app loads, if no one is logged in, the current user is null, but if someone logs in, the current user will be automatically assigned to him
+    // In this special useEffect (which "should" only runs once) you pass a callback function to onAuthStateChanged.
+    // After that, this callback function will be called based on the auth logic, and not on useEffect rules
+
     useEffect(() => {
         onAuthStateChanged(auth, (currentUser) => {
             setUserLogged(currentUser)
@@ -66,25 +70,34 @@ function onlyLoadOnce(){
                     setUserLoggedData(docSnap.data())
                 }
                 matchUser()
-            }
-        })
 
-    }, [])
-
-
-    // use a useEffect that reloads the app everytime the document in the db changes
-    useEffect(() => {
-        onAuthStateChanged(auth, (currentUser) => {
-
-            setUserLogged(currentUser)
-            if (currentUser !== null){
-                onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+                // After that, this callback function will be called based on the auth logic, and not on useEffect rules, so it force-reloads the app everytime the data in the db changes
+                const checkUpdates = async () => onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+                    console.log(doc.data())
                     setUserLoggedData(doc.data())
                 })
+                checkUpdates()
             }
-
         })
     }, [])
+
+    // --------- LEAVING THIS FOR SOS - I'M TESTING MERGING THE TWO useEffectS ABOVE, WITH ONLY ONE onAuthStateChanged.
+    // --------- this force-reloads the app everytime the data in the db changes
+
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (currentUser) => {
+    //         setUserLogged(currentUser)
+    //         if (currentUser !== null){
+    //             onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+    //                 console.log("the db changed")
+    //                 console.log(doc.data())
+    //                 setUserLoggedData(doc.data())
+    //             })
+    //         }
+    //     })
+    // }, [])
+
+    // --------- LEAVING THIS FOR SOS - I'M TESTING MERGING THE TWO useEffectS ABOVE, WITH ONLY ONE onAuthStateChanged.
 
 
     function handleSignup(event){
@@ -109,33 +122,29 @@ function onlyLoadOnce(){
     }
 
     const signUp = async () => {
-        console.log(signinUp.username)
-        console.log(currency)
-        
-            try {
-                    // BLOCK TRY IF USERNAME AND CURRENCY ARE MISSING
-                    if(signinUp.username !== "" && currency !== "none"){
-                        const user = await createUserWithEmailAndPassword(auth, signinUp.email, signinUp.password)
-                        // storing the user info when signing up
-                        let fieldsData = {username: signinUp.username, email: signinUp.email, password: signinUp.password, currency: currency, savingBalance: 100, checkingBalance: 100}
-                        console.log(fieldsData)
-                        // MORE DATA TO BE ADDED FOR THEMES & BALANCES
-                        await setDoc(doc(db, "users", user.user.uid), fieldsData)
-                                    
-                        // this data will be shared around all the pages and can be edited and resubmitted to db
-                        setUserLoggedData(fieldsData)
-                    }
-                    else if (signinUp.username === "" && currency === "none") {
-                        setSignupError("Please fill in all the fields")
-                    }
-                    else if (currency === "none") {
-                        setSignupError("Please select your currency")
-                    }
-                    else if (signinUp.username === "") {
-                        setSignupError("Please enter a username")
-                    }
-            } 
-
+        try {
+                // BLOCK TRY IF USERNAME AND CURRENCY ARE MISSING
+                if(signinUp.username !== "" && currency !== "none"){
+                    const user = await createUserWithEmailAndPassword(auth, signinUp.email, signinUp.password)
+                    // storing the user info when signing up
+                    let fieldsData = {username: signinUp.username, email: signinUp.email, password: signinUp.password, currency: currency, savingBalance: 100, checkingBalance: 100}
+                    console.log(fieldsData)
+                    // MORE DATA TO BE ADDED FOR THEMES & BALANCES
+                    await setDoc(doc(db, "users", user.user.uid), fieldsData)
+                                
+                    // this data will be shared around all the pages and can be edited and resubmitted to db
+                    setUserLoggedData(fieldsData)
+                }
+                else if (signinUp.username === "" && currency === "none") {
+                    setSignupError("Please fill in all the fields")
+                }
+                else if (currency === "none") {
+                    setSignupError("Please select your currency")
+                }
+                else if (signinUp.username === "") {
+                    setSignupError("Please enter a username")
+                }
+        } 
         catch (error){
             console.log(error.message)
             if(error.message === "Firebase: Error (auth/email-already-in-use)."){
@@ -225,8 +234,18 @@ function onlyLoadOnce(){
             let totalPlusDeposit = parseFloat(userLoggedData.checkingBalance) + parseFloat(depositChecking.amount)
             // pushing it in the db
             const userRef = doc(db, "users", user.uid)
+            console.log('about to push to db')
+
             await updateDoc(userRef, { checkingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-checking", depositChecking.info, depositChecking.amount] })
+
+                // TEST //
+                // const docSnap = await getDoc(userRef)
+                // console.log(docSnap.data())
+                // TEST //
+            
             setDepositChecking({amount: "", info: ""})
+
+
 
         } else if (depositChecking.amount == "" && depositChecking.info !== "" ){
             alert("Enter amount")
@@ -247,6 +266,13 @@ function onlyLoadOnce(){
             // pushing it in the db
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { savingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-saving", depositSaving.info, depositSaving.amount] })
+            
+            // TEST //
+            // const docRef = doc(db, "users", user.uid)
+            // const docSnap = await getDoc(docRef)
+            // console.log(docSnap.data())
+            // TEST //
+
             setDepositSaving({amount: "", info: ""})
 
         } else if (depositSaving.amount == "" && depositSaving.info !== "" ){
@@ -356,7 +382,8 @@ function onlyLoadOnce(){
 // _______________________________________________________________
 
     return (
-        <UserContext.Provider value={{signinUp,
+        <UserContext.Provider value={{
+        signinUp,
         currency,
         loggingIn,
         userLogged,
