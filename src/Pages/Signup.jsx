@@ -30,8 +30,9 @@ function Signup() {
     cleanSignupError()
   }, [])
 
-  // every time i click on signup (function from usecontext) the content of userLogged changes so it triggers useEffect,
-  //and allows the user to go to checkingbalance that is a private route, only accessible if userLogged is populated
+  // every time i click on signup (function from usecontext) the content of userLogged changes
+  // (also through the onAuthStateChanged inside the useEffect) so it triggers useEffect,
+  // and allows the user to go to checkingbalance that is a private route, only accessible if userLogged is NOT null
   useEffect(() => {
     if (userLogged !== null){
       cleanSignupError()

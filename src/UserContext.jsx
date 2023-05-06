@@ -63,7 +63,7 @@ function onlyLoadOnce(){
             if (currentUser == null){
                 setUserLoggedData({});
             } else {
-                // link the current user to the one matching in the database and saves it in the shared data
+                // on login, link the current user to the one matching in the database and saves it in the shared data
                 const matchUser = async () => {
                     const docRef = doc(db, "users", currentUser.uid)
                     const docSnap = await getDoc(docRef)
@@ -71,9 +71,10 @@ function onlyLoadOnce(){
                 }
                 matchUser()
 
-                // After that, this callback function will be called based on the auth logic, and not on useEffect rules, so it force-reloads the app everytime the data in the db changes
+                // in this case, inside the auth logic, you can listen to a document with the onSnapshot() method.
+                // An initial call using the callback you provide creates a document snapshot immediately with the current contents of the single document.
+                // Then, each time the database content change, another call updates the document snapshot.
                 const checkUpdates = async () => onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
-                    console.log(doc.data())
                     setUserLoggedData(doc.data())
                 })
                 checkUpdates()
@@ -123,27 +124,27 @@ function onlyLoadOnce(){
 
     const signUp = async () => {
         try {
-                // BLOCK TRY IF USERNAME AND CURRENCY ARE MISSING
-                if(signinUp.username !== "" && currency !== "none"){
-                    const user = await createUserWithEmailAndPassword(auth, signinUp.email, signinUp.password)
-                    // storing the user info when signing up
-                    let fieldsData = {username: signinUp.username, email: signinUp.email, password: signinUp.password, currency: currency, savingBalance: 100, checkingBalance: 100}
-                    console.log(fieldsData)
-                    // MORE DATA TO BE ADDED FOR THEMES & BALANCES
-                    await setDoc(doc(db, "users", user.user.uid), fieldsData)
-                                
-                    // this data will be shared around all the pages and can be edited and resubmitted to db
-                    setUserLoggedData(fieldsData)
-                }
-                else if (signinUp.username === "" && currency === "none") {
-                    setSignupError("Please fill in all the fields")
-                }
-                else if (currency === "none") {
-                    setSignupError("Please select your currency")
-                }
-                else if (signinUp.username === "") {
-                    setSignupError("Please enter a username")
-                }
+            // BLOCK TRY IF USERNAME AND CURRENCY ARE MISSING
+            if(signinUp.username !== "" && currency !== "none"){
+                const user = await createUserWithEmailAndPassword(auth, signinUp.email, signinUp.password)
+                // storing the user info when signing up
+                let fieldsData = {username: signinUp.username, email: signinUp.email, password: signinUp.password, currency: currency, savingBalance: 100, checkingBalance: 100}
+                console.log(fieldsData)
+                // adding the additional user info to the database in the matching entry
+                await setDoc(doc(db, "users", user.user.uid), fieldsData)
+                            
+                // this same data will be shared and displayed around all the pages and can be edited and resubmitted to db
+                setUserLoggedData(fieldsData)
+            }
+            else if (signinUp.username === "" && currency === "none") {
+                setSignupError("Please fill in all the fields")
+            }
+            else if (currency === "none") {
+                setSignupError("Please select your currency")
+            }
+            else if (signinUp.username === "") {
+                setSignupError("Please enter a username")
+            }
         } 
         catch (error){
             console.log(error.message)
@@ -165,15 +166,19 @@ function onlyLoadOnce(){
         try {
             const user = await signInWithEmailAndPassword(auth, loggingIn.email, loggingIn.password)
             // matching user logged with user in db and all the data linked to him
-            const docRef = doc(db, "users", user.user.uid)
-            const docSnap = await getDoc(docRef)
+
+            // _________NO NEED TO USE THE BELOW: THE DATA ASSOCIATED WITH THE USER WILL BE LINKED WITH USEEFFECT ABOVE 
+
+            // const docRef = doc(db, "users", user.user.uid)
+            // const docSnap = await getDoc(docRef)
         
-            if (docSnap.exists()) {
-                console.log("Document data:", docSnap.data())
-            } else {
-            // doc.data() will be undefined in this case
-                console.log("No such data!")
-            }
+            // if (docSnap.exists()) {
+            //     console.log("Document data:", docSnap.data())
+            // } else {
+            // // doc.data() will be undefined in this case
+            //     console.log("No such data!")
+            // }
+
             setLoginError('')
 
         } catch (error){
@@ -234,15 +239,8 @@ function onlyLoadOnce(){
             let totalPlusDeposit = parseFloat(userLoggedData.checkingBalance) + parseFloat(depositChecking.amount)
             // pushing it in the db
             const userRef = doc(db, "users", user.uid)
-            console.log('about to push to db')
-
             await updateDoc(userRef, { checkingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-checking", depositChecking.info, depositChecking.amount] })
-
-                // TEST //
-                // const docSnap = await getDoc(userRef)
-                // console.log(docSnap.data())
-                // TEST //
-            
+            // once pushed, it triggers the onAuthStateChanged in the useEffect and refresh the data displayed in the app
             setDepositChecking({amount: "", info: ""})
 
 
@@ -266,12 +264,7 @@ function onlyLoadOnce(){
             // pushing it in the db
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { savingBalance: parseFloat(totalPlusDeposit) , [timestamp]: [ "transaction-saving", depositSaving.info, depositSaving.amount] })
-            
-            // TEST //
-            // const docRef = doc(db, "users", user.uid)
-            // const docSnap = await getDoc(docRef)
-            // console.log(docSnap.data())
-            // TEST //
+            // once pushed, it triggers the onAuthStateChanged in the useEffect and refresh the data displayed in the app
 
             setDepositSaving({amount: "", info: ""})
 
@@ -294,6 +287,7 @@ function onlyLoadOnce(){
             // pushing it in the db
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { checkingBalance: parseFloat(totalLessWithdraw) , [timestamp]: [ "transaction-checking", withdrawChecking.info, withdrawChecking.amount] })
+            // once pushed, it triggers the onAuthStateChanged in the useEffect and refresh the data displayed in the app
             setWithdrawChecking({amount: "", info: ""})
 
         } else if (withdrawChecking.amount == "" && withdrawChecking.info !== "" ){
@@ -315,6 +309,7 @@ function onlyLoadOnce(){
             // pushing it in the db
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { savingBalance: parseFloat(totalLessWithdraw) , [timestamp]: [ "transaction-saving", withdrawSaving.info, withdrawSaving.amount] })
+            // once pushed, it triggers the onAuthStateChanged in the useEffect and refresh the data displayed in the app
             setWithdrawSaving({amount: "", info: ""})
 
         } else if (withdrawSaving.amount == "" && withdrawSaving.info !== "" ){
@@ -342,9 +337,10 @@ function onlyLoadOnce(){
             // creating the new balance of current checking amount after subtracting what I want to send to saving
             let totalLessSentToSaving = parseFloat(userLoggedData.checkingBalance) - parseFloat(sendingToSaving)
             let newSavingBalance = parseFloat(userLoggedData.savingBalance) + parseFloat(sendingToSaving)
-
+            // pushing it in the db
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { checkingBalance: parseFloat(totalLessSentToSaving) , savingBalance: parseFloat(newSavingBalance), [timestamp]: [ "transaction-ToSaving", "Transfer to Saving Account", sendingToSaving] })
+            // once pushed, it triggers the onAuthStateChanged in the useEffect and refresh the data displayed in the app
 
             setSendingToSaving("")
         } else {
@@ -359,9 +355,10 @@ function onlyLoadOnce(){
             // creating the new balance of current saving amount after subtracting what I want to send to checking
             let totalLessSentToChecking = parseFloat(userLoggedData.savingBalance) - parseFloat(sendingToChecking)
             let newCheckingBalance = parseFloat(userLoggedData.checkingBalance) + parseFloat(sendingToChecking)
-
+            // pushing it in the db
             const userRef = doc(db, "users", user.uid)
             await updateDoc(userRef, { savingBalance: parseFloat(totalLessSentToChecking) , checkingBalance: parseFloat(newCheckingBalance), [timestamp]: [ "transaction-ToChecking", "Transfer to Checking Account", sendingToChecking] })
+            // once pushed, it triggers the onAuthStateChanged in the useEffect and refresh the data displayed in the app
 
             setSendingToChecking("")
         } else {
